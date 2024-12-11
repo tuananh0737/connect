@@ -1,0 +1,24 @@
+<div class="user" >
+    <h1>Danh sách người dùng</h1>
+    <table border="1" [cellSpacing]="0" [cellPadding]="6">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Username</th>
+                <th>Fullname</th>
+                <th>Trạng thái hoạt động</th>
+                <th>Sách đã mượn</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let user of users">
+                <td>{{user.id}}</td>
+                <td>{{user.username}}</td>
+                <td>{{user.fullname}}</td>
+                <td>{{ user.actived ? 'hoạt động' : 'không hoạt động' }}</td>                <td>
+                    <button (click)= "showBorrowBook()" >View</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

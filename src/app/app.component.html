@@ -1,0 +1,22 @@
+<nav *ngIf="userRole === 'ROLE_USER'" mat-tab-nav-bar>
+	<a mat-tab-link routerLink="/home">Bookreads</a>
+	<a mat-tab-link routerLink="/mybook">Bookmark</a>
+	<a mat-tab-link routerLink="/borrow">Borrow Book</a>
+	<a mat-tab-link routerLink="/booklist">List</a>
+	<a *ngIf="!isLoggedIn" mat-tab-link routerLink="/login">Login</a>
+	<a *ngIf="!isLoggedIn" mat-tab-link routerLink="/sign-up">Sign Up</a>
+	<a *ngIf="isLoggedIn" mat-tab-link routerLink="/user-info">Info</a>
+	<a *ngIf="isLoggedIn" mat-tab-link (click)="logout()">Logout</a>
+  </nav>
+  
+  <nav *ngIf="userRole === 'ROLE_ADMIN'" mat-tab-nav-bar>
+	<a mat-tab-link routerLink="/admin/admin-home">Bookreads</a>
+	<a mat-tab-link routerLink="/admin/user">User</a>
+	<a mat-tab-link routerLink="/admin/book">Book</a>
+	<a mat-tab-link routerLink="/admin/author">Author</a>
+	<a mat-tab-link routerLink="/admin/genre">Genre</a>
+	<a *ngIf="isLoggedIn" mat-tab-link (click)="logout()">Logout</a>
+  </nav>
+  
+  <router-outlet></router-outlet>
+  

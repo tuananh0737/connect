@@ -1,0 +1,19 @@
+<div class="borrowBook-container">
+    <h2>Danh sách đã mượn</h2>
+
+    <div *ngIf="errorMessage" class="error-message">
+        <p>{{errorMessage}}</p>
+    </div>
+
+    <div *ngIf="borrowBooks && borrowBooks.length > 0">
+        <div *ngFor="let borrowBook of borrowBooks" class="book-item">
+            <h3>{{ borrowBook.book.name }}</h3>
+            <p><strong>Author:</strong> {{ borrowBook.book.author.fullname }}</p>
+            <p><strong>Genre:</strong> {{ borrowBook.book.genres.name.trim() }}</p>
+            <p><strong>Publish Year:</strong> {{ borrowBook.book.publishYear }}</p>
+            <p><strong>Time: </strong>{{borrowBook.createdDate}}</p>
+        </div>
+    </div>
+
+  <p *ngIf="borrowBooks && borrowBooks.length === 0">Danh sách mượn trống.</p>
+</div>

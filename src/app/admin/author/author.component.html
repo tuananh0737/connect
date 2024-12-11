@@ -1,0 +1,82 @@
+<div class="author">
+    <h1>Danh sách tác giả</h1>
+    <table border="1" cellspacing="0" cellpadding="8">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Họ và Tên</th>
+          <th>Địa chỉ</th>
+          <th>Ngày sinh</th>
+          <th>Quốc tịch</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let author of authors">
+          <td>{{ author.id }}</td>
+          <td>{{ author.fullname }}</td>
+          <td>{{ author.address }}</td>
+          <td>{{ author.birthDay | date: 'dd/MM/yyyy' }}</td>
+          <td>{{ author.nationality }}</td>
+          <td class="action">
+            <img src="assets/edit.png" alt="Edit" (click)="openEditAuthorForm(author)" />
+            <img src="assets/trash.png" alt="Delete" (click)="deleteAuthor(author.id)" />
+          </td>    
+        </tr>
+      </tbody>
+    </table>
+  
+    <button class="add-author-btn" (click)="openAddAuthorForm()">Add Author</button>
+  </div>
+  
+  <div *ngIf="showAddAuthorForm" class="overlay">
+    <div class="form-container">
+      <h2>Thêm Tác Giả</h2>
+      <form (ngSubmit)="addAuthor()">
+        <label for="fullname">Họ và Tên:</label>
+        <input type="text" id="fullname" [(ngModel)]="newAuthor.fullname" name="fullname" required />
+  
+        <label for="address">Địa chỉ:</label>
+        <input type="text" id="address" [(ngModel)]="newAuthor.address" name="address" required />
+  
+        <label for="birthDay">Ngày sinh:</label>
+        <input type="date" id="birthDay" [(ngModel)]="newAuthor.birthDay" name="birthDay" required />
+  
+        <label for="nationality">Quốc tịch:</label>
+        <input type="text" id="nationality" [(ngModel)]="newAuthor.nationality" name="nationality" required />
+  
+        <div class="button-group">
+          <button type="submit" class="add-btn">Add</button>
+          <button type="button" class="cancel-btn" (click)="closeAddAuthorForm()">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  
+  <div *ngIf="showDeleteConfirm" class="overlay">
+    <div class="overlay-content">
+      <p>Bạn có chắc chắn muốn xóa <strong>{{ selectAuthor?.fullname }}</strong> không?</p>
+      <div class="button-group">
+        <button (click)="confirmDelete()">Có</button>
+        <button (click)="cancelDelete()">Không</button>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="deleteSuccessful" class="overlay">
+    <div class="overlay-content">
+      <p>Xóa Tác giả thành công</p>
+      <div class="button-group">
+        <button (click)="cancelDelete()">Đóng</button>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="updateSuccessful" class="overlay">
+    <div class="overlay-content">
+      <p>Cập nhật Tác giả thành công</p>
+      <div class="button-group">
+        <button (click)="cancel()">Đóng</button>
+      </div>
+    </div>
+  </div>

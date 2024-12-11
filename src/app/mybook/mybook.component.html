@@ -1,0 +1,18 @@
+<div class="mybook-container">
+  <h2>My Bookmarks</h2>
+
+  <div *ngIf="errorMessage" class="error-message">
+    <p>{{ errorMessage }}</p>
+  </div>
+
+  <div *ngIf="bookmarks && bookmarks.length > 0">
+    <div *ngFor="let bookmark of bookmarks" class="book-item">
+      <h3>{{ bookmark.book.name }}</h3>
+      <p><strong>Author:</strong> {{ bookmark.book.author.fullname }}</p>
+      <p><strong>Genre:</strong> {{ bookmark.book.genres.name.trim() }}</p>
+      <p><strong>Publish Year:</strong> {{ bookmark.book.publishYear }}</p>
+    </div>
+  </div>
+
+  <p *ngIf="bookmarks && bookmarks.length === 0">Không có danh sách yêu thích.</p>
+</div>

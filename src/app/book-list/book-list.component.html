@@ -1,0 +1,58 @@
+<div class="book-list">
+    <h1>Tìm kiếm</h1>
+    <div class="search-form">
+        <input 
+        type="text" 
+        id="searchInput" 
+        placeholder="Search by book title, author or genres" 
+        [(ngModel)]="searchQuery" />
+        <button  (click)="performSearch()">Search</button>
+    </div>
+    <table border="1" cellspacing="0" cellpadding="8">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Author</th>
+          <th>Genre</th>
+          <th>Number Page</th>
+          <th>Publish Year</th>
+          <th>Details</th>
+          <th>Quantity</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let book of books">
+          <td>{{ book.name }}</td>
+          <td>{{ book.author.fullname }} ({{ book.author.nationality }})</td>
+          <td>{{ book.genres.name }}</td>
+          <td>{{ book.numberPage }}</td>
+          <td>{{ book.publishYear }}</td>
+          <td>
+            <button (click)="showDetails(book)">View</button>
+          </td>
+          <td>{{ book.quantity }}</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div *ngIf="selectedBook" class="overlay">
+        <div class="form-container">
+           <h2>Book Details</h2>
+            <p><strong>Name:</strong> {{ selectedBook.name }}</p>
+            <p><strong>Author:</strong> {{ selectedBook.author.fullname }} ({{ selectedBook.author.nationality }})</p>
+            <p><strong>Genre:</strong>  {{ selectedBook.genres.name }}</p>
+            <p><strong>Number Page:</strong> {{ selectedBook.numberPage }}</p>
+            <p><strong>Publish Year:</strong> {{ selectedBook.publishYear }}</p>
+            <p><strong>Details:</strong> {{ selectedBook.description }}</p>
+            <p><strong>Quantity:</strong> {{ selectedBook.quantity }}</p>
+            <button (click)="borrow()">Borrow</button>
+            <button (click)="closeForm()">Close</button>
+    </div>
+    <div class="overlay" *ngIf="showOutOfStock">
+      <div class="overlay-content">
+        <p>Sách này đã hết!</p>
+        <button (click)="closeOverlay()">Close</button>
+      </div>
+    </div>
+  

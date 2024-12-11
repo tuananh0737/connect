@@ -1,0 +1,149 @@
+<div class="book">
+  <h1>Tìm kiếm</h1>
+  <div class="search-form">
+    <input 
+      type="text" 
+      id="searchInput" 
+      placeholder="Search by book title, author, or genres" 
+      [(ngModel)]="searchQuery" />
+    <button (click)="performSearch()">Search</button>
+  </div>
+
+  <table border="1" cellspacing="0" cellpadding="8">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Author</th>
+        <th>Genre</th>
+        <th>Number Page</th>
+        <th>Publish Year</th>
+        <th>Details</th>
+        <th>Quantity</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let book of books">
+        <td>{{ book.name }}</td>
+        <td>{{ book.author.fullname }} ({{ book.author.nationality }})</td>
+        <td>{{ book.genres.name }}</td>
+        <td>{{ book.numberPage }}</td>
+        <td>{{ book.publishYear }}</td>
+        <td>
+          <button (click)="showDetails(book)">View</button>
+        </td>
+        <td>{{ book.quantity }}</td>
+        <td class="action">
+          <img src="assets/edit.png" alt="Edit" (click)="openEditBookForm(book)" />
+          <img src="assets/trash.png" alt="Delete" (click)="deleteBook(book.id)" />
+        </td>    
+      </tr>
+    </tbody>
+  </table>
+
+  <button class="add-book-btn" (click)="openAddBookForm()">Add Book</button>
+</div>
+
+<div *ngIf="selectedBook" class="overlay">
+  <div class="form-container">
+    <h2>Book Details</h2>
+    <p><strong>Name:</strong> {{ selectedBook.name }}</p>
+    <p><strong>Author:</strong> {{ selectedBook.author.fullname }} ({{ selectedBook.author.nationality }})</p>
+    <p><strong>Genre:</strong> {{ selectedBook.genres.name }}</p>
+    <p><strong>Number Page:</strong> {{ selectedBook.numberPage }}</p>
+    <p><strong>Publish Year:</strong> {{ selectedBook.publishYear }}</p>
+    <p><strong>Details:</strong> {{ selectedBook.description }}</p>
+    <p><strong>Quantity:</strong> {{ selectedBook.quantity }}</p>
+    <button (click)="borrow()">Borrow</button>
+    <button (click)="closeForm()">Close</button>
+  </div>
+</div>
+
+<div *ngIf="showOutOfStock" class="overlay">
+  <div class="overlay-content">
+    <p>Sách này đã hết!</p>
+    <button (click)="closeOverlay()">Close</button>
+  </div>
+</div>
+
+<div *ngIf="showAddBookForm" class="overlay">
+  <div class="form-container">
+    <h2>Add New Book</h2>
+    <form (ngSubmit)="addBook()">
+      <label for="name">Name:</label>
+      <input 
+        type="text" 
+        id="name" 
+        [(ngModel)]="newBook.name" 
+        name="name" 
+        required />
+
+      <label for="authorId">Author ID:</label>
+      <input 
+        type="number" id="authorId" 
+        [(ngModel)]="newBook.author.id" 
+        name="authorId" 
+        required />
+
+      <label for="genreId">Genre ID:</label>
+      <input 
+        type="number"  id="genreId" 
+        [(ngModel)]="newBook.genres.id" 
+        name="genreId" 
+        required />
+
+      <label for="numberPage">Number Page:</label>
+      <input 
+        type="number"  id="numberPage" 
+        [(ngModel)]="newBook.numberPage" 
+        name="numberPage" 
+        required />
+
+      <label for="publishYear">Publish Year:</label>
+      <input 
+        type="number"  id="publishYear" 
+        [(ngModel)]="newBook.publishYear" 
+        name="publishYear" 
+        required />
+
+      <label for="description">Description:</label>
+      <textarea 
+        id="description" rows="3" 
+        [(ngModel)]="newBook.description" 
+        name="description">
+      </textarea>
+
+      <label for="quantity">Quantity:</label>
+      <input 
+        type="number" id="quantity" 
+        [(ngModel)]="newBook.quantity" 
+        name="quantity" 
+        required />
+
+      <div class="button-group">
+        <button type="submit" class="add-btn">Add</button>
+        <button type="button" class="cancel-btn" (click)="closeAddBookForm()">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div *ngIf="showDeleteConfirm" class="overlay">
+  <div class="overlay-content">
+    <p>Bạn có chắc chắn muốn xóa <strong>{{ selectedBook?.name }}</strong> không?</p>
+    <div class="button-group">
+      <button (click)="confirmDelete()">Có</button>
+      <button (click)="cancelDelete()">Không</button>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="updateSuccessful" class="overlay">
+  <div class="overlay-content">
+    <p>Cập nhật thành công</p>
+    <div class="button-group">
+      <button (click)="cancel()">Đóng</button>
+    </div>
+  </div>
+</div>
+

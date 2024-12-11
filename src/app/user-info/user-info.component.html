@@ -1,0 +1,14 @@
+<div class="user-info-container">
+    <h2>User Information</h2>
+    <div *ngIf="userInfo; else errorTemplate">
+      <p><strong>ID:</strong> {{ userInfo.id }}</p>
+      <p><strong>Username:</strong> {{ userInfo.username }}</p>
+      <p><strong>Full Name:</strong> {{ userInfo.fullname }}</p>
+      <p><strong>Role:</strong> {{ userInfo.role }}</p>
+      <p><strong>Active:</strong> {{ userInfo.actived ? 'Yes' : 'No' }}</p>
+    </div>
+    <ng-template #errorTemplate>
+      <p class="error-message">{{ errorMessage }}</p>
+    </ng-template>
+  </div>
+  

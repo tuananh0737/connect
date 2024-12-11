@@ -1,0 +1,161 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f4f4f4; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100%;
+  background: linear-gradient(135deg, #fff, #04ad10); 
+}
+
+.login-box {
+  background: rgba(255, 255, 255, 0.8); 
+  padding: 30px;
+  border-radius: 10px;
+  width: 400px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+h2 {
+  color: #333;
+  margin-bottom: 20px;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.form-group {
+  margin-bottom: 15px;
+  text-align: left;
+}
+
+label {
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 5px;
+  display: block;
+}
+
+input {
+  width: 100%;
+  padding: 12px;
+  margin-top: 5px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+input:focus {
+  border-color: #2575fc; 
+  outline: none;
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  background-color: #2575fc;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:disabled {
+  background-color: #aaa;
+  cursor: not-allowed;
+}
+
+button:hover {
+  background-color: #6a11cb; 
+}
+
+a {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+} 
+.forgot-password {
+  display: block;
+  margin-top: 15px;
+  text-align: right;
+  font-size: 14px;
+  color: #007bff;
+  text-decoration: none;
+  margin-bottom: 25px;
+}
+
+p.signup-message {
+  margin: 10px 0;
+  font-size: 14px;
+  color: #333;
+}
+
+p.signup-message a {
+  color: #007bff;
+  font-weight: bold;
+  text-decoration: none;
+  border: none;
+}
+
+
+
+.separator {
+  margin: 20px 0;
+  font-size: 14px;
+  color: #333;
+}
+
+.separator span {
+  background-color: #fff;
+  padding: 0 10px;
+}
+
+.google-login-btn {
+  width: 100%;
+  padding: 12px;
+  background-color: #db4437;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.google-login-btn img {
+  width: 20px;
+  margin-right: 10px;
+}
+
+.google-login-btn:hover {
+  background-color: #c1351d; 
+}
+
+.error-message {
+  margin-top: 10px;
+  color: #f44336;
+  font-size: 14px;
+  text-align: center;
+}

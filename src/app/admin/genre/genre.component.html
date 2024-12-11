@@ -1,0 +1,66 @@
+<div class="genre">
+    <h1>Danh sách thể loại</h1>
+    <table border="1" [cellSpacing]="0" [cellPadding]="4">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Tên</th>
+                <th>Chi tiết thể loại</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let genre of genres">
+                <td>{{ genre.id }}</td>
+                <td>{{ genre.name }}</td>
+                <td>{{ genre.details }}</td>
+                <td class="action">
+                    <img src="assets/edit.png" alt="Edit" (click)="openEditGenreForm(genre)" />
+                    <img src="assets/trash.png" alt="Delete" (click)="deleteGenre(genre.id)" />
+                  </td>    
+            </tr>
+        </tbody>
+    </table>
+
+    <button class="add-genre-btn" (click)="openAddGenreForm()">Add Genre</button>
+</div>
+
+<div *ngIf="showAddGenreForm" class="overlay">
+    <div class="form-container" >
+        <h2>Thêm thể loại</h2>
+        <form (ngSubmit)="addGenre()">
+            <label for="id">ID</label>
+            <input type="number" id="id" [(ngModel)]="newGenre.id" name="id" required />
+
+            <label for="name">Name</label>
+            <input type="text" id="name" [(ngModel)]="newGenre.name" name="name" required />
+
+            <label for="details">Details</label>
+            <input type="text" id="details" [(ngModel)]="newGenre.details" name="details" required />
+
+            <div class="button-group">
+                <button type="submit" class="add-btn">Add</button>
+                <button type="button" class="cancel-btn" (click)="closeAddGenreForm()">Cancel</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div *ngIf="showDeleteConfirm" class="overlay">
+    <div class="overlay-content">
+      <p>Bạn có chắc chắn muốn xóa <strong>{{ selectedGenre?.name }}</strong> không?</p>
+      <div class="button-group">
+        <button (click)="confirmDelete()">Có</button>
+        <button (click)="cancelDelete()">Không</button>
+      </div>
+    </div>
+  </div>
+  
+  <div *ngIf="updateSuccessful" class="overlay">
+    <div class="overlay-content">
+      <p>Cập nhật Tác giả thành công</p>
+      <div class="button-group">
+        <button (click)="cancel()">Đóng</button>
+      </div>
+    </div>
+  </div>
