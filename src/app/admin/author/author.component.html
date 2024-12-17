@@ -1,5 +1,10 @@
 <div class="author">
     <h1>Danh sách tác giả</h1>
+    <div class="search-form">
+      <input type="text" id="searchInput" placeholder="Search by genre.name"
+      [(ngModel)]="searchQuery">
+      <button (click)="performSearch()">Search</button>
+    </div>
     <table border="1" cellspacing="0" cellpadding="8">
       <thead>
         <tr>

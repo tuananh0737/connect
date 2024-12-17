@@ -1,5 +1,11 @@
 <div class="genre">
     <h1>Danh sách thể loại</h1>
+    <div class="search-form">
+      <input type="text" id="searchInput" placeholder="Search by genre.name"
+      [(ngModel)]="searchQuery">
+      <button (click)="performSearch()">Search</button>
+    </div>
+
     <table border="1" [cellSpacing]="0" [cellPadding]="4">
         <thead>
             <tr>
@@ -29,8 +35,6 @@
     <div class="form-container" >
         <h2>Thêm thể loại</h2>
         <form (ngSubmit)="addGenre()">
-            <label for="id">ID</label>
-            <input type="number" id="id" [(ngModel)]="newGenre.id" name="id" required />
 
             <label for="name">Name</label>
             <input type="text" id="name" [(ngModel)]="newGenre.name" name="name" required />
@@ -55,10 +59,19 @@
       </div>
     </div>
   </div>
+
+  <div *ngIf="deleteSuccessful" class="overlay">
+    <div class="overlay-content">
+      <p>Xóa thể loại thành công</p>
+      <div class="button-group">
+        <button (click)="cancelDelete()">Đóng</button>
+      </div>
+    </div>
+  </div>
   
   <div *ngIf="updateSuccessful" class="overlay">
     <div class="overlay-content">
-      <p>Cập nhật Tác giả thành công</p>
+      <p>Cập nhật thành công</p>
       <div class="button-group">
         <button (click)="cancel()">Đóng</button>
       </div>

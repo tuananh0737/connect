@@ -7,7 +7,9 @@
                 <th>Username</th>
                 <th>Fullname</th>
                 <th>Trạng thái hoạt động</th>
+                <th>Số điện thoại</th>
                 <th>Sách đã mượn</th>
+                <Th>Action</Th>
             </tr>
         </thead>
         <tbody>
@@ -15,10 +17,43 @@
                 <td>{{user.id}}</td>
                 <td>{{user.username}}</td>
                 <td>{{user.fullname}}</td>
-                <td>{{ user.actived ? 'hoạt động' : 'không hoạt động' }}</td>                <td>
-                    <button (click)= "showBorrowBook()" >View</button>
-                </td>
+                <td>{{user.actived ? 'hoạt động' : 'không hoạt động' }}</td>
+                <td>{{user.phone}}</td>    
+                <td>
+                    <button (click)="showBorrowBook(user.id)">View</button>
+                </td>                
+                <td class="action">
+                    <img src="assets/edit.png" alt="Edit"  />
+                    <img src="assets/trash.png" alt="Delete" (click)="deleteUser(user.id)" />
+                  </td>    
             </tr>
         </tbody>
     </table>
+<div *ngIf="showModal" class="modal">
+    <div class="modal-content">
+        <span class="close" (click)="closeModal()">&times;</span>
+        <h2>Danh sách sách đã mượn</h2>
+        <table border="1" cellspacing="0" cellpadding="6">
+            <thead>
+                <tr>
+                    <th>Tên sách</th>
+                    <th>Tác giả</th>
+                    <th>Thể loại</th>
+                    <th>Năm phát hành</th>
+                    <th>Thời gian mượn</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let book of borrowedBooks">
+                    <td>{{ book.bookName }}</td>
+                    <td>{{ book.authorName }}</td>
+                    <td>{{ book.genre }}</td>
+                    <td>{{ book.publishYear }}</td>
+                    <td>{{ book.borrowedDate }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
 </div>

@@ -23,7 +23,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let book of books">
+      <tr *ngFor="let book of books; trackBy: trackByBookId">
         <td>{{ book.name }}</td>
         <td>{{ book.author.fullname }} ({{ book.author.nationality }})</td>
         <td>{{ book.genres.name }}</td>
@@ -36,114 +36,92 @@
         <td class="action">
           <img src="assets/edit.png" alt="Edit" (click)="openEditBookForm(book)" />
           <img src="assets/trash.png" alt="Delete" (click)="deleteBook(book.id)" />
-        </td>    
+        </td>
       </tr>
     </tbody>
   </table>
 
   <button class="add-book-btn" (click)="openAddBookForm()">Add Book</button>
+  <div  class="overlay" *ngIf="selectedBook">
+    <div class="form-container">
+      <h2>Book Details</h2>
+      <p><strong>Name:</strong> {{ selectedBook.name }}</p>
+      <p><strong>Author:</strong> {{ selectedBook.author.fullname }}</p>
+      <p><strong>Genre:</strong> {{ selectedBook.genres.name }}</p>
+      <p><strong>Number Page:</strong> {{ selectedBook.numberPage }}</p>
+      <p><strong>Publish Year:</strong> {{ selectedBook.publishYear }}</p>
+      <p><strong>Details:</strong> {{ selectedBook.description }}</p>
+      <p><strong>Quantity:</strong> {{ selectedBook.quantity }}</p>
+      <button (click)="borrow(selectedBook)">Borrow</button>
+      <button (click)="closeForm()">Close</button>
+    </div>
 </div>
-
-<div *ngIf="selectedBook" class="overlay">
-  <div class="form-container">
-    <h2>Book Details</h2>
-    <p><strong>Name:</strong> {{ selectedBook.name }}</p>
-    <p><strong>Author:</strong> {{ selectedBook.author.fullname }} ({{ selectedBook.author.nationality }})</p>
-    <p><strong>Genre:</strong> {{ selectedBook.genres.name }}</p>
-    <p><strong>Number Page:</strong> {{ selectedBook.numberPage }}</p>
-    <p><strong>Publish Year:</strong> {{ selectedBook.publishYear }}</p>
-    <p><strong>Details:</strong> {{ selectedBook.description }}</p>
-    <p><strong>Quantity:</strong> {{ selectedBook.quantity }}</p>
-    <button (click)="borrow()">Borrow</button>
-    <button (click)="closeForm()">Close</button>
-  </div>
-</div>
-
-<div *ngIf="showOutOfStock" class="overlay">
+<div *ngIf="showBorrowBook" class="overlay">
   <div class="overlay-content">
-    <p>Sách này đã hết!</p>
-    <button (click)="closeOverlay()">Close</button>
-  </div>
-</div>
-
-<div *ngIf="showAddBookForm" class="overlay">
-  <div class="form-container">
-    <h2>Add New Book</h2>
-    <form (ngSubmit)="addBook()">
-      <label for="name">Name:</label>
+    <h2>Form mượn sách</h2>
+    <p><strong>Sách:</strong> {{ selectedBook?.name }}</p>
+    <div class="search-form">
       <input 
         type="text" 
-        id="name" 
-        [(ngModel)]="newBook.name" 
-        name="name" 
-        required />
+        id="searchUserInput" 
+        placeholder="Search by name, idCard, or phone" 
+        [(ngModel)]="userSearchQuery" />
+      <button (click)="searchUser()">Search</button>
+    </div>
 
-      <label for="authorId">Author ID:</label>
-      <input 
-        type="number" id="authorId" 
-        [(ngModel)]="newBook.author.id" 
-        name="authorId" 
-        required />
+    <div *ngIf="users.length > 0" class="user-list">
+      <h3>Kết quả tìm kiếm:</h3>
+      <ul>
+        <li 
+          *ngFor="let user of users" 
+          [class.selected]="selectedUserId === user.id" 
+          (click)="selectUser(user.id)">
+          <strong>{{ user.fullname }}</strong> - {{ user.phone }} - {{ user.idCard }}
+        </li>
+      </ul>
+    </div>
 
-      <label for="genreId">Genre ID:</label>
-      <input 
-        type="number"  id="genreId" 
-        [(ngModel)]="newBook.genres.id" 
-        name="genreId" 
-        required />
+    <div class="button-group">
+      <button (click)="confirmBorrow()">Xác nhận</button>
+      <button (click)="closeBorrowBookForm()">Hủy</button>
+    </div>
+  </div>
+</div>
 
-      <label for="numberPage">Number Page:</label>
-      <input 
-        type="number"  id="numberPage" 
-        [(ngModel)]="newBook.numberPage" 
-        name="numberPage" 
-        required />
-
-      <label for="publishYear">Publish Year:</label>
-      <input 
-        type="number"  id="publishYear" 
-        [(ngModel)]="newBook.publishYear" 
-        name="publishYear" 
-        required />
-
-      <label for="description">Description:</label>
-      <textarea 
-        id="description" rows="3" 
-        [(ngModel)]="newBook.description" 
-        name="description">
-      </textarea>
-
-      <label for="quantity">Quantity:</label>
-      <input 
-        type="number" id="quantity" 
-        [(ngModel)]="newBook.quantity" 
-        name="quantity" 
-        required />
-
-      <div class="button-group">
-        <button type="submit" class="add-btn">Add</button>
-        <button type="button" class="cancel-btn" (click)="closeAddBookForm()">Cancel</button>
-      </div>
+<div class="overlay" *ngIf="showAddBookForm">
+  <div class="form-container">
+    <h2>Nhập thông tin sách mới</h2>
+    <form (ngSubmit)="saveNewBook()">
+      <label>
+        Name:
+        <input type="text" [(ngModel)]="newBook.name" name="name" required />
+      </label>
+      <label>
+        Author:
+        <input type="text" [(ngModel)]="newBook.author.fullname" name="author" required />
+      </label>
+      <label>
+        Genre:
+        <input type="text" [(ngModel)]="newBook.genres.name" name="genre" required />
+      </label>
+      <label>
+        Pages:
+        <input type="number" [(ngModel)]="newBook.numberPage" name="pages" required />
+      </label>
+      <label>
+        Year:
+        <input type="number" [(ngModel)]="newBook.publishYear" name="year" required />
+      </label>
+      <label>
+        Details:
+        <textarea [(ngModel)]="newBook.description" name="details" required></textarea>
+      </label>
+      <label>
+        Quantity:
+        <input type="number" [(ngModel)]="newBook.quantity" name="quantity" required />
+      </label>
+      <button type="submit">Save</button>
+      <button type="button" (click)="closeAddBookForm()">Cancel</button>
     </form>
   </div>
-</div>
-
-<div *ngIf="showDeleteConfirm" class="overlay">
-  <div class="overlay-content">
-    <p>Bạn có chắc chắn muốn xóa <strong>{{ selectedBook?.name }}</strong> không?</p>
-    <div class="button-group">
-      <button (click)="confirmDelete()">Có</button>
-      <button (click)="cancelDelete()">Không</button>
-    </div>
-  </div>
-</div>
-
-<div *ngIf="updateSuccessful" class="overlay">
-  <div class="overlay-content">
-    <p>Cập nhật thành công</p>
-    <div class="button-group">
-      <button (click)="cancel()">Đóng</button>
-    </div>
-  </div>
-</div>
-
+</div> 

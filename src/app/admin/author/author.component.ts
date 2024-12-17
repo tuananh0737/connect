@@ -19,6 +19,7 @@ export class AuthorComponent implements OnInit {
   selectAuthor: Author | null = null;
   showAddAuthorForm: boolean = false;
   updateSuccessful: boolean = false;
+  searchQuery: string = '' ;
 
   newAuthor: Author = {
     id: 0,
@@ -39,6 +40,21 @@ export class AuthorComponent implements OnInit {
         console.error('Lỗi khi gọi API:', err);
       }
     });
+  }
+
+  performSearch(): void {
+    const query = this.searchQuery.toLowerCase().trim();
+    const url = "http://localhost:8081/api/public/search-author";
+  
+    this.http.post<Author[]>(url, {param: query}).subscribe({
+      next:(data)=> {
+        this.authors = data;
+      },
+      error:(err) => {
+        console.error("Lỗi khi tìm kiếm");
+        alert("Lỗi")
+      },
+    })
   }
 
   openAddAuthorForm(): void {
@@ -103,7 +119,7 @@ export class AuthorComponent implements OnInit {
   deleteSuccessful: boolean = false;
 
   deleteAuthor(authorId: number): void {
-    const genre = this.authors.find((g) => g.id === authorId);
+    const genre = this.authors.find((a) => a.id === authorId);
     if (genre) {
       this.authorToDeleteId = authorId;
       this.showDeleteConfirm = true;

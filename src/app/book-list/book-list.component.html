@@ -46,7 +46,7 @@
             <p><strong>Publish Year:</strong> {{ selectedBook.publishYear }}</p>
             <p><strong>Details:</strong> {{ selectedBook.description }}</p>
             <p><strong>Quantity:</strong> {{ selectedBook.quantity }}</p>
-            <button (click)="borrow()">Borrow</button>
+            <button (click)="addBookmark(selectedBook)">Add Bookmark</button>
             <button (click)="closeForm()">Close</button>
     </div>
     <div class="overlay" *ngIf="showOutOfStock">

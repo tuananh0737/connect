@@ -17,6 +17,8 @@ export class GenreComponent implements OnInit {
   selectedGenre: Genre | null = null;
   showAddGenreForm: boolean = false;
   updateSuccessful: boolean = false;
+  deleteSuccessful: boolean = false;
+  searchQuery: string = '';
 
   newGenre: Genre = {
     id: 0,
@@ -36,6 +38,21 @@ export class GenreComponent implements OnInit {
       }
     });
  }
+
+ performSearch(): void {
+  const query = this.searchQuery.toLowerCase().trim();
+  const url = "http://localhost:8081/api/public/search-genre";
+
+  this.http.post<Genre[]>(url, {param: query}).subscribe({
+    next:(data)=> {
+      this.genres = data;
+    },
+    error:(err) => {
+      console.error("Lỗi khi tìm kiếm");
+      alert("Lỗi")
+    },
+  })
+}
 
  openAddGenreForm(): void {
   this.showAddGenreForm = true;
@@ -62,13 +79,13 @@ export class GenreComponent implements OnInit {
   }
 
   const headers = { Authorization: `Bearer ${token}` };
-  const url = 'api/admin/add-update-genre';
+  const url = 'api/admin/add-update-genres';
 
   this.http.post<Genre>(url, this.newGenre, { headers }).subscribe({
     next: (response) => {
-      const existingAuthorIndex = this.genres.findIndex(genre => genre.id === response.id);
-      if (existingAuthorIndex !== -1) {
-        this.genres[existingAuthorIndex] = response;
+      const existingGenreIndex = this.genres.findIndex(genre => genre.id === response.id);
+      if (existingGenreIndex !== -1) {
+        this.genres[existingGenreIndex] = response;
       } else {
         this.genres.push(response);
       }
@@ -108,14 +125,14 @@ export class GenreComponent implements OnInit {
     }
 
     const headers = { Authorization: `Bearer ${token}` };
-    const url = `/api/admin/delete-book?id=${this.genreToDeleteId}`;
+    const url = `/api/admin/delete-genres?id=${this.genreToDeleteId}`;
 
     this.http.delete(url, {headers}).subscribe({
       next:() => {
         this.genres = this.genres.filter((g) => g.id !== this.genreToDeleteId);
         this.showAddGenreForm = false;
         this.genreToDeleteId = null;
-        alert('Thể loại đã được xóa thành công');
+        this.deleteSuccessful = true;
       },
       error: (err) => {
         console.error('Lỗi khi xóa thể loại: ', err);
@@ -128,9 +145,10 @@ export class GenreComponent implements OnInit {
   cancelDelete(): void {
     this.showDeleteConfirm = false;
     this.genreToDeleteId = null;
+    this.deleteSuccessful = false;
   }
 
   cancel(): void {
-    this.updateSuccessful;
+    this.updateSuccessful = false;
   }
 }

@@ -43,20 +43,20 @@ export class LoginComponent {
   this.loading = false; 
   console.log('Error Object:', error.error); 
 
-  try {
-    const parsedError = typeof error.error === 'string' ? JSON.parse(error.error) : error.error;
-    if (parsedError.errorMessage) {
-      this.errorMessage = parsedError.errorMessage; 
-      console.error('Error Message:', parsedError.errorMessage);
-      console.error('Error Code:', parsedError.errorCode);
-    } else {
-      this.errorMessage = 'An unknown error occurred.';
+      try {
+        const parsedError = typeof error.error === 'string' ? JSON.parse(error.error) : error.error;
+        if (parsedError.errorMessage) {
+          this.errorMessage = parsedError.errorMessage; 
+          console.error('Error Message:', parsedError.errorMessage);
+          console.error('Error Code:', parsedError.errorCode);
+        } else {
+          this.errorMessage = 'An unknown error occurred.';
+        }
+      } catch (e) {
+        this.errorMessage = 'Unable to process the error response.';
+        console.error('Error Parsing:', e);
+      }
     }
-  } catch (e) {
-    this.errorMessage = 'Unable to process the error response.';
-    console.error('Error Parsing:', e);
-  }
-}
     });
   }
 

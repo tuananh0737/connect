@@ -9,6 +9,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 export class MybookComponent implements OnInit {
   bookmarks: any[] = [];
   errorMessage: string = '';
+  isDeleteOverlayVisible: boolean = false;
+  selectedBookmark: any = null; 
 
   constructor(private http: HttpClient) {}
 
@@ -29,6 +31,37 @@ export class MybookComponent implements OnInit {
       },
       error: (error) => {
         this.errorMessage = error.error?.errorMessage || 'Lỗi khi tải danh sách';
+        console.error('Error:', error);
+      }
+    });
+  }
+
+  openDeleteOverlay(bookmark: any): void {
+    this.selectedBookmark = bookmark; 
+    this.isDeleteOverlayVisible = true;
+  }
+
+  closeDeleteOverlay(): void {
+    this.isDeleteOverlayVisible = false; 
+    this.selectedBookmark = null; 
+  }
+
+  deleteBook(bookmarkId: string): void {
+    const token = localStorage.getItem('authToken');
+    if (!token) {
+      this.errorMessage = 'Bạn cần đăng nhập lại để xóa mục yêu thích.';
+      return;
+    }
+
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    this.http.delete(`/api/user/delete-bookmark?id=${bookmarkId}`, { headers }).subscribe({
+      next: () => {
+        this.bookmarks = this.bookmarks.filter(bookmark => bookmark.id !== bookmarkId); 
+        this.closeDeleteOverlay(); 
+        this.errorMessage = ''; 
+      },
+      error: (error) => {
+        this.errorMessage = error.error?.errorMessage || 'Lỗi khi xóa mục yêu thích';
         console.error('Error:', error);
       }
     });

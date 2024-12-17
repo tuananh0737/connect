@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BookService } from '../services/book.service';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 
 interface Book {
@@ -49,16 +49,6 @@ export class BookListComponent implements OnInit {
     });
   }
 
-  borrow(): void {
-    if (this.selectedBook) {
-      if (this.selectedBook.quantity > 0) {
-        this.selectedBook.quantity -= 1; 
-      } else {
-        this.showOutOfStock = true; 
-      }
-    }
-  }
-
   showDetails(book: Book): void {
     this.selectedBook = book; 
   }
@@ -87,12 +77,37 @@ export class BookListComponent implements OnInit {
 
     if (this.books.length === 0) {
       alert('Không tìm thấy sách nào phù hợp.');
-      
     }
   }
 
   resetSearch(): void {
     this.books = [...this.originalBooks]; 
     this.searchQuery = ''; 
+  }
+
+  addBookmark(book: Book): void {
+    const token = localStorage.getItem('authToken');
+    if (!token) {
+      alert('Bạn cần đăng nhập để sử dụng chức năng này.');
+      return;
+    }
+
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    });
+
+    const body = { book: { id: book.id } };
+
+    this.http.post('api/user/add-bookmark', body, { headers }).subscribe({
+      next: () => {
+        alert('Đã thêm sách vào bookmark.');
+      },
+      error: (err) => {
+        const errorMessage = err.error?.message || 'Không thể thêm sách vào bookmark.';
+        console.error('Lỗi khi thêm bookmark:', err);
+        alert(errorMessage);
+      }
+    });
   }
 }

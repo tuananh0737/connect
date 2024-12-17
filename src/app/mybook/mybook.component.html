@@ -9,10 +9,22 @@
     <div *ngFor="let bookmark of bookmarks" class="book-item">
       <h3>{{ bookmark.book.name }}</h3>
       <p><strong>Author:</strong> {{ bookmark.book.author.fullname }}</p>
-      <p><strong>Genre:</strong> {{ bookmark.book.genres.name.trim() }}</p>
+      <p><strong>Genre:</strong> {{ bookmark.book.genres.name?.trim() }}</p>
       <p><strong>Publish Year:</strong> {{ bookmark.book.publishYear }}</p>
+
+      <img src="assets/trash.png" alt="Delete" (click)="openDeleteOverlay(bookmark)" class="delete-button" />
     </div>
   </div>
 
   <p *ngIf="bookmarks && bookmarks.length === 0">Không có danh sách yêu thích.</p>
+
+  <div *ngIf="isDeleteOverlayVisible" class="overlay">
+    <div class="overlay-content">
+      <p>Bạn có chắc chắn muốn xóa <strong>{{ selectedBookmark?.book.name }}</strong> khỏi danh sách yêu thích?</p>
+      <div class="overlay-buttons">
+        <button (click)="deleteBook(selectedBookmark?.id)" class="btn-confirm">CÓ</button>
+        <button (click)="closeDeleteOverlay()" class="btn-cancel">KHÔNG</button>
+      </div>
+    </div>
+  </div>
 </div>

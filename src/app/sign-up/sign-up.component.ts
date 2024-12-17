@@ -44,14 +44,10 @@ export class SignUpComponent {
           alert('Registration Failed');
         }
       },
-      error: (error) => {
-        this.loading = false;
-        if (error.status === 417 && error.error && error.error.errorMessage === "Tên đăng nhập đã tồn tại") {
-          this.showUsernameExistsOverlay = true;
-        } else {
-          alert('Registration Failed');
-          console.error('Error:', error);
-        }
+      error: (err) => {
+        const errorMessage = err.error?.errorMessage || 'Không thể đăng kí' ;
+        console.error('Lỗi khi thêm bookmark:', err);
+        alert(errorMessage);
       }
     });
   }

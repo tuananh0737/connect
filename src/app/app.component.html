@@ -1,8 +1,8 @@
 <nav *ngIf="userRole === 'ROLE_USER'" mat-tab-nav-bar>
 	<a mat-tab-link routerLink="/home">Bookreads</a>
-	<a mat-tab-link routerLink="/mybook">Bookmark</a>
-	<a mat-tab-link routerLink="/borrow">Borrow Book</a>
-	<a mat-tab-link routerLink="/booklist">List</a>
+	<a mat-tab-link routerLink="/mybook">Danh sách yêu thích</a>
+	<a mat-tab-link routerLink="/borrow">Sách đã mượn</a>
+	<a mat-tab-link routerLink="/booklist">Tìm kiếm</a>
 	<a *ngIf="!isLoggedIn" mat-tab-link routerLink="/login">Login</a>
 	<a *ngIf="!isLoggedIn" mat-tab-link routerLink="/sign-up">Sign Up</a>
 	<a *ngIf="isLoggedIn" mat-tab-link routerLink="/user-info">Info</a>
