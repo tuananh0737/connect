@@ -1,29 +1,98 @@
-<div class="home-container">
-  <div class="welcome-section">
-    <h1>Welcome to Bookreads!</h1>
-    <p>Discover your next favorite book, track your reading progress, and connect with other book lovers.</p>
-  </div>
-
-<!-- thể loại/ -->
-  <div class="book-categories">
-    <h2>Popular Categories</h2>
-    <div class="categories">
-      <div class="category-card" *ngFor="let category of categories">
-        <h3>{{ category.name }}</h3>
-        <p>{{ category.description }}</p>
-        <button (click)="navigateToCategory(category.id)">Explore</button>
+<div class="container mt-5">
+  <h1 class="text-center mb-4">Xếp hạng sách </h1>
+  <div class="row">
+    <div *ngFor="let book of books" class="col-md-3">
+      <div class="card">
+        <img
+          [src]="'data:image/png;base64,' + book.qrCode"
+          class="card-img-top"
+          alt="Book Cover"
+          *ngIf="book.qrCode; else noImage"
+        />
+        <ng-template #noImage>
+          <img src="https://via.placeholder.com/150" class="card-img-top" alt="No Image" />
+        </ng-template>
+        <div class="card-body">
+          <h5 class="card-title">{{ book.name }}</h5>
+          <p class="card-text text-muted">
+            Author: {{ book.author.fullname || 'Unknown' }}
+          </p>
+          <p class="card-text text-muted">
+            Genre: {{ book.genres.name || 'Unknown' }}
+          </p>
+          <p class="card-text">
+            Published: {{ book.publishYear || 'N/A' }}
+          </p>
+          <p class="card-text">
+            Rating: <strong>{{ book.averageRating || 'N/A' }}</strong>
+          </p>
+          <button
+            class="btn btn-primary"
+            (click)="showBookDetails(book)"
+            data-bs-toggle="modal"
+            data-bs-target="#bookDetailModal"
+          >
+            Xem chi tiết
+          </button>
+        </div>
       </div>
     </div>
   </div>
 
-  <div class="recent-books">
-    <h2>Recently Added</h2>
-    <div class="books">
-      <div class="book-card" *ngFor="let book of recentBooks">
-        <img [src]="book.coverUrl" alt="{{ book.title }}" />
-        <h3>{{ book.title }}</h3>
-        <p>{{ book.author }}</p>
-        <button (click)="viewBookDetails(book.id)">View Details</button>
+
+  <h2 class="text-center mt-5 mb-4">Khám phá thẻ loại</h2>
+  <div class="row">
+    <div *ngFor="let genre of genres" class="col-md-4">
+      <div
+        class="genre-card text-center p-3 shadow-sm"
+        (click)="navigateToBooklist(genre.name)"
+        style="cursor: pointer;"
+      >
+        <h5>{{ genre.name }}</h5>
+        <p>{{ genre.details }}</p>
+      </div>
+    </div>
+  </div>
+  
+
+<div
+  class="modal fade"
+  id="bookDetailModal"
+  tabindex="-1"
+  aria-labelledby="bookDetailModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="bookDetailModalLabel">
+          Thông tin chi tiết
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body" *ngIf="selectedBook">
+        <h4>{{ selectedBook.name }}</h4>
+        <p><strong>Tác giả:</strong> {{ selectedBook.author?.name || 'Unknown' }}</p>
+        <p><strong>Năm xuất bản:</strong> {{ selectedBook.publishYear || 'N/A' }}</p>
+        <p><strong>Số trang:</strong> {{ selectedBook.numberPage || 'N/A' }}</p>
+        <p><strong>Số lượng còn:</strong> {{ selectedBook.quantity || 0 }}</p>
+        <p><strong>Mô tả:</strong></p>
+        <p>{{ selectedBook.description || 'Không có mô tả' }}</p>
+        <p><strong>Đánh giá trung bình:</strong> {{ selectedBook.averageRating || 'N/A' }}</p>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-bs-dismiss="modal"
+        >
+        Đóng
+        </button>
       </div>
     </div>
   </div>

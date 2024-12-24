@@ -1,84 +1,138 @@
-<div class="user" >
-    <h1>Danh sách người dùng</h1>
-    <table border="1" [cellSpacing]="0" [cellPadding]="6">
-        <thead>
+<div class="container py-4">
+    <div class="container py-4">
+        <h1 class="mb-4">Danh sách người dùng</h1>
+        
+        <!-- Thanh tìm kiếm -->
+        <div class="mb-4">
+          <input type="text" class="form-control" placeholder="Nhập tên người dùng, số điện thoại hoặc mã người dùng" [(ngModel)]="param">
+          <button class="btn btn-primary mt-2" (click)="searchUser()">Tìm kiếm</button>
+        </div>
+        
+        <table class="table table-bordered table-striped">
+          <thead class="table-light">
             <tr>
-                <th>ID</th>
-                <th>Username</th>
-                <th>Fullname</th>
-                <th>Trạng thái hoạt động</th>
-                <th>Số điện thoại</th>
-                <th>Sách đã mượn</th>
-                <Th>Action</Th>
+              <th>ID</th>
+              <th>Username</th>
+              <th>Fullname</th>
+              <th>Trạng thái hoạt động</th>
+              <th>Số điện thoại</th>
+              <th>Sách đã mượn</th>
+              <th>Action</th>
             </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let user of users">
-                <td>{{user.id}}</td>
-                <td>{{user.username}}</td>
-                <td>{{user.fullname}}</td>
-                <td>{{user.actived ? 'hoạt động' : 'không hoạt động' }}</td>
-                <td>{{user.phone}}</td>    
-                <td>
-                    <button class="view" (click)="showBorrowBook(user.id)">View</button>
-                </td>                
-                <td class="action">
-                    <img src="assets/edit.png" alt="Edit" (click)="openEditUserForm(user)" />
-                  </td>    
+          </thead>
+          <tbody>
+            <tr *ngFor="let user of paginatedUsers">
+              <td>{{ user.id }}</td>
+              <td>{{ user.username }}</td>
+              <td>{{ user.fullname }}</td>
+              <td>{{ user.actived ? 'Hoạt động' : 'Không hoạt động' }}</td>
+              <td>{{ user.phone }}</td>
+              <td>
+                <button class="btn btn-info btn-sm" (click)="showBorrowBook(user.id)">View</button>
+              </td>
+              <td class="action">
+                <button class="btn btn-sm btn-outline-primary" (click)="openEditUserForm(user)">
+                  <img src="assets/edit.png" alt="Edit" style="width: 16px;">
+                </button>
+              </td>
             </tr>
-        </tbody>
-    </table>
-<div *ngIf="showModal" class="modal">
-    <div class="modal-content">
-        <span class="close" (click)="closeModal()">&times;</span>
-        <h2>Danh sách sách đã mượn</h2>
-        <table border="1" cellspacing="0" cellpadding="6">
-            <thead>
-                <tr>
+          </tbody>          
+        </table>
+      </div>
+
+      <div class="pagination">
+        <button 
+          class="btn btn-secondary" 
+          [disabled]="currentPage === 1" 
+          (click)="goToPage(currentPage - 1)">
+          Trang trước
+        </button>
+      
+        <span class="mx-2">Trang {{ currentPage }} / {{ totalPages }}</span>
+      
+        <button 
+          class="btn btn-secondary" 
+          [disabled]="currentPage === totalPages" 
+          (click)="goToPage(currentPage + 1)">
+          Trang sau
+        </button>
+      </div>
+      
+
+      <div *ngIf="showModal" class="modal fade show" tabindex="-1" style="display: block;">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Danh sách sách đã mượn</h5>
+              <button type="button" class="btn-close" (click)="closeModal()"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table table-bordered">
+                <thead class="table-light">
+                  <tr>
                     <th>Tên sách</th>
                     <th>Tác giả</th>
                     <th>Thể loại</th>
                     <th>Năm phát hành</th>
                     <th>Thời gian mượn</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let book of borrowedBooks">
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let book of borrowedBooks">
                     <td>{{ book.bookName }}</td>
                     <td>{{ book.authorName }}</td>
                     <td>{{ book.genre }}</td>
                     <td>{{ book.publishYear }}</td>
                     <td>{{ book.borrowedDate }}</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
-</div>
-
-<div *ngIf="showEditForm" class="overlay">
-    <div class="form-container">
-      <h2>Chỉnh sửa người dùng</h2>     
-      <label>Fullname:</label>
-      <input [(ngModel)]="selectedUser!.fullname" /><br />
-
-      <label>Số điện thoại:</label>
-      <input [(ngModel)]="selectedUser!.phone" /><br />
-
-      <label>Mã người dùng:</label>
-      <input [(ngModel)]="selectedUser!.idCard" /><br />
-
-        <label class="status-label">Trạng thái:</label>
-        <label class="switch">
-        <input type="checkbox" [(ngModel)]="selectedUser!.actived" />
-        <span class="slider round"></span>
-        </label>
- 
-
-      <div *ngIf="errorMessage" class="error-message">
-        {{ errorMessage }}
-      </div> 
-      <button (click)="saveUser()">Lưu</button>
-      <button (click)="closeEditForm()">Hủy</button>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" (click)="closeModal()">Đóng</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+    <div *ngIf="showEditForm" class="modal fade show" tabindex="-1" style="display: block;">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Chỉnh sửa người dùng</h5>
+            <button type="button" class="btn-close" (click)="closeEditForm()"></button>
+          </div>
+          <form (ngSubmit)="saveUser()">
+            <div class="modal-body">
+              <div class="mb-3">
+                <label for="fullname" class="form-label">Fullname:</label>
+                <input type="text" id="fullname" class="form-control" [(ngModel)]="selectedUser!.fullname" name="fullname">
+              </div>
+              <div class="mb-3">
+                <label for="phone" class="form-label">Số điện thoại:</label>
+                <input type="text" id="phone" class="form-control" [(ngModel)]="selectedUser!.phone" name = "phone">
+              </div>
+              <div class="mb-3">
+                <label for="idCard" class="form-label">Mã người dùng:</label>
+                <input type="text" id="idCard" class="form-control" [(ngModel)]="selectedUser!.idCard" name="idCard">
+              </div>
+              <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" id="statusToggle" [(ngModel)]="selectedUser!.actived" name="actived">
+                <label class="form-check-label" for="statusToggle">
+                  {{ selectedUser?.actived ? 'Hoạt động' : 'Không hoạt động' }}
+                </label>
+              </div>              
+              <div *ngIf="errorMessage" class="alert alert-danger">
+                {{ errorMessage }}
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-primary" >Lưu</button>
+              <button type="button" class="btn btn-secondary" (click)="closeEditForm()">Hủy</button>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
   </div>
+  

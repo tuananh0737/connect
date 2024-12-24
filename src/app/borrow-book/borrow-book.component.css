@@ -1,33 +1,29 @@
-.borrowBook-container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    background-color: #f9f9f9;
-  }
-  
-  .borrowBook-container h2 {
-    text-align: center;
-    margin-bottom: 20px;
-  }
-  
-  .error-message {
-    color: red;
-    text-align: center;
-    margin-bottom: 10px;
-  }
-  
-  .book-item {
-    border-bottom: 1px solid #ddd;
-    padding: 15px 0;
-  }
-  
-  .book-item h3 {
-    margin: 0 0 10px;
-  }
-  
-  .book-item p {
-    margin: 5px 0;
-  }
-  
+.borrowBook-container .card-header {
+  background-color: #007bff; /* Màu xanh Bootstrap */
+  color: white;
+}
+
+.borrowBook-container .list-group-item {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  padding: 15px;
+}
+
+.borrowBook-container .list-group-item h5 {
+  color: #333;
+  font-weight: bold;
+}
+
+.borrowBook-container .list-group-item p {
+  font-size: 14px;
+  color: #555;
+}
+
+.borrowBook-container .alert {
+  margin-bottom: 15px;
+}
+
+.card-header {
+  background-color: #2fb746 !important;
+}

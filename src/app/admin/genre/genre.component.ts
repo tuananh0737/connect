@@ -146,9 +146,11 @@ export class GenreComponent implements OnInit {
     this.showDeleteConfirm = false;
     this.genreToDeleteId = null;
     this.deleteSuccessful = false;
+    this.updateSuccessful = false;
   }
 
   cancel(): void {
     this.updateSuccessful = false;
+    this.deleteSuccessful = false;
   }
 }

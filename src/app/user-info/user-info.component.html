@@ -1,38 +1,61 @@
-<div class="user-info-container">
-  <h2>User Information</h2>
-  <div *ngIf="userInfo; else errorTemplate">
-    <p><strong>ID:</strong> {{ userInfo.id }}</p>
-    <p><strong>Username:</strong> {{ userInfo.username }}</p>
-    <p><strong>Full Name:</strong> {{ userInfo.fullname }}</p>
-    <p><strong>Role:</strong> {{ userInfo.role }}</p>
-    <p><strong>Active:</strong> {{ userInfo.actived ? 'Yes' : 'No' }}</p>
-    <p><strong>Phone:</strong> {{ userInfo.phone }}</p>
-    <p><strong>idCard:</strong> {{ userInfo.idCard }}</p>
-    <button (click)="update()">Chỉnh sửa</button>
+<div class="container mt-4">
+  <div class="card user-info-container">
+    <div class="card-header bg-primary text-white text-center">
+      <h2>User Information</h2>
+    </div>
+    <div class="card-body" *ngIf="userInfo; else errorTemplate">
+      <p><strong>ID:</strong> {{ userInfo.id }}</p>
+      <p><strong>Username:</strong> {{ userInfo.username }}</p>
+      <p><strong>Full Name:</strong> {{ userInfo.fullname }}</p>
+      <p><strong>Role:</strong> {{ userInfo.role }}</p>
+      <p><strong>Active:</strong> {{ userInfo.actived ? 'Yes' : 'No' }}</p>
+      <p><strong>Phone:</strong> {{ userInfo.phone }}</p>
+      <p><strong>ID Card:</strong> {{ userInfo.idCard }}</p>
+      <button class="btn btn-primary w-100" (click)="update()">Chỉnh sửa</button>
+    </div>
+    <ng-template #errorTemplate>
+      <div class="alert alert-danger text-center">
+        {{ errorMessage }}
+      </div>
+    </ng-template>
   </div>
-  <ng-template #errorTemplate>
-    <p class="error-message">{{ errorMessage }}</p>
-  </ng-template>
 </div>
 
 <div class="overlay" *ngIf="showUpdate">
   <div class="overlay-content">
-    <h2>Cập nhật thông tin cá nhân</h2>
+    <h2 class="text-center">Cập nhật thông tin cá nhân</h2>
     <form [formGroup]="updateForm" (ngSubmit)="submitUpdate()">
-      <p><strong>ID:</strong> {{ userInfo.id }}</p>
-
-      <label for="fullname">Full Name</label>
-      <input id="fullname" formControlName="fullname" type="text" />
-
-      <label for="phone">Phone</label>
-      <input id="phone" formControlName="phone" type="text" />
-
-      <label for="idCard">ID Card</label>
-      <input id="idCard" formControlName="idCard" type="text" />
-
-      <button type="submit">Lưu thay đổi</button>
-      <button type="button" (click)="showUpdate = false">Hủy</button>
+      <div class="mb-3">
+        <label for="fullname" class="form-label">Full Name</label>
+        <input
+          id="fullname"
+          formControlName="fullname"
+          type="text"
+          class="form-control"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="phone" class="form-label">Phone</label>
+        <input
+          id="phone"
+          formControlName="phone"
+          type="text"
+          class="form-control"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="idCard" class="form-label">ID Card</label>
+        <input
+          id="idCard"
+          formControlName="idCard"
+          type="text"
+          class="form-control"
+        />
+      </div>
+      <div class="d-flex justify-content-between">
+        <button type="submit" class="btn btn-success">Lưu thay đổi</button>
+        <button type="button" class="btn btn-secondary" (click)="showUpdate = false">Hủy</button>
+      </div>
     </form>
   </div>
 </div>
-   

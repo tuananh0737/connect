@@ -1,19 +1,25 @@
-<div class="borrowBook-container">
-    <h2>Danh sách đã mượn</h2>
-
-    <div *ngIf="errorMessage" class="error-message">
-        <p>{{errorMessage}}</p>
-    </div>
-
-    <div *ngIf="borrowBooks && borrowBooks.length > 0">
-        <div *ngFor="let borrowBook of borrowBooks" class="book-item">
-            <h3>{{ borrowBook.book.name }}</h3>
-            <p><strong>Author:</strong> {{ borrowBook.book.author.fullname }}</p>
-            <p><strong>Genre:</strong> {{ borrowBook.book.genres.name.trim() }}</p>
-            <p><strong>Publish Year:</strong> {{ borrowBook.book.publishYear }}</p>
-            <p><strong>Time: </strong>{{borrowBook.createdDate}}</p>
+<div class="container my-4 borrowBook-container">
+    <div class="card">
+      <div class="card-header bg-primary text-white text-center">
+        <h2>Danh sách đã mượn</h2>
+      </div>
+      <div class="card-body">
+        <div *ngIf="errorMessage" class="alert alert-danger text-center">
+          {{ errorMessage }}
         </div>
+  
+        <div *ngIf="borrowBooks && borrowBooks.length > 0" class="list-group">
+          <div *ngFor="let borrowBook of borrowBooks" class="list-group-item">
+            <h5 class="mb-2">{{ borrowBook.book.name }}</h5>
+            <p class="mb-1"><strong>Tác giả:</strong> {{ borrowBook.book.author.fullname }}</p>
+            <p class="mb-1"><strong>Thể loại:</strong> {{ borrowBook.book.genres.name.trim() }}</p>
+            <p class="mb-1"><strong>Năm xuất bản:</strong> {{ borrowBook.book.publishYear }}</p>
+            <p class="mb-1"><strong>Thời gian mượn:</strong> {{ borrowBook.createdDate }}</p>
+          </div>
+        </div>
+  
+        <p *ngIf="borrowBooks && borrowBooks.length === 0" class="text-center mt-3">Danh sách mượn trống.</p>
+      </div>
     </div>
-
-  <p *ngIf="borrowBooks && borrowBooks.length === 0">Danh sách mượn trống.</p>
-</div>
+  </div>
+  

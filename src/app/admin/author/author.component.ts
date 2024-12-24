@@ -4,7 +4,6 @@ import { HttpClient } from '@angular/common/http';
 interface Author {
   id: number;
   fullname: string;
-  address: string;
   birthDay: string;
   nationality: string;
 }
@@ -24,7 +23,6 @@ export class AuthorComponent implements OnInit {
   newAuthor: Author = {
     id: 0,
     fullname: '',
-    address: '',
     birthDay: '',
     nationality: ''
   };
@@ -70,7 +68,6 @@ export class AuthorComponent implements OnInit {
     this.newAuthor = {
       id: 0,
       fullname: '',
-      address: '',
       birthDay: '',
       nationality: ''
     };

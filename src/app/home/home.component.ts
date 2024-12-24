@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 
 @Component({
@@ -7,54 +8,55 @@ import { Router } from '@angular/router';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  searchQuery: string = '';
-  categories = [
-    { id: 1, name: 'Fiction', description: 'Explore the world of imagination' },
-    { id: 2, name: 'Non-Fiction', description: 'Dive into real-world stories' },
-    { id: 3, name: 'Fantasy', description: 'Discover magical adventures' },
-    { id: 4, name: 'Science Fiction', description: 'Experience futuristic tales' },
-  ];
-  recentBooks = [
-    {
-      id: 1,
-      title: 'The Great Gatsby',
-      author: 'F. Scott Fitzgerald',
-      coverUrl: 'https://via.placeholder.com/150',
-    },
-    {
-      id: 2,
-      title: '1984',
-      author: 'George Orwell',
-      coverUrl: 'https://via.placeholder.com/150',
-    },
-    {
-      id: 3,
-      title: 'To Kill a Mockingbird',
-      author: 'Harper Lee',
-      coverUrl: 'https://via.placeholder.com/150',
-    },
-  ];
+  books: any[] = [];
+  genres: any[] = [];
+  selectedBook: any = null;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router ,private http: HttpClient) {}
 
-  ngOnInit(): void {}
-
-  performSearch(): void {
-    console.log('Search Query:', this.searchQuery);
+  ngOnInit(): void {
+    this.fetchBooks();
+    this.fetchGenres();
   }
 
-  navigateToCategory(categoryId: number): void {
-    console.log('Navigating to category:', categoryId);
-    // Implement navigation logic if necessary
+  fetchBooks(): void {
+    const apiUrl = '/api/public/books-by-rating';
+    this.http.get<any[]>(apiUrl).subscribe({
+      next: (response) => {
+        this.books = response.slice(0, 4); 
+      },
+      error: (error) => {
+        console.error('Error fetching books:', error);
+      }
+    });
   }
 
-  viewBookDetails(bookId: number): void {
-    console.log('Viewing book details:', bookId);
-    // Implement navigation logic to view book details
+  showBookDetails(book: any) {
+    this.selectedBook = book;
   }
 
-  logout(): void {
-    localStorage.removeItem('authToken');
-    this.router.navigate(['/login']);
+  closeForm(): void {
+    this.selectedBook = null; 
   }
+
+  fetchGenres(): void {
+    const apiUrl = '/api/public/find-all-genres';
+    this.http.get<any[]>(apiUrl).subscribe({
+      next: (response) => {
+        this.genres = this.shuffleArray(response).slice(0, 6);
+      },
+      error: (error) => {
+        console.error('Error fetching genres:', error);
+      }
+    });
+  }
+
+  shuffleArray(array: any[]): any[] {
+    return array.sort(() => Math.random() - 0.5);
+  }
+  
+  navigateToBooklist(genreName: string): void {
+    this.router.navigate(['/booklist'], { queryParams: { genre: genreName } });
+  }
+    
 }

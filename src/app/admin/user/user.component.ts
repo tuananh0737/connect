@@ -1,5 +1,4 @@
 import { HttpClient } from '@angular/common/http';
-import { Token } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 
 
@@ -36,18 +35,7 @@ export class UserComponent implements OnInit {
 
 
   ngOnInit(): void {
-  const token = localStorage.getItem('authToken');
-
-  const headers = { Authorization: `Bearer ${token}`};
-  const url = '/api/admin/getUserByRole?role=ROLE_USER';
-    this.http.get<User[]>(url, {headers}).subscribe({
-      next: (data) => {
-        this.users = data;
-      },
-      error:(err) => {
-        console.error('Lỗi khi gọi API:', err);        
-      },
-    })
+    this.loadUsers();
   }
 
   borrowedBooks: BorrowedBook[] = []; 
@@ -125,4 +113,71 @@ export class UserComponent implements OnInit {
     this.selectedUser = null;
     this.errorMessage = null;
   }
+
+  //searchUser
+  param: string = '';
+
+  searchUser(): void {
+    const token = localStorage.getItem('authToken');
+    const headers = { Authorization: `Bearer ${token}` };
+    const url = '/api/admin/search-user';
+  
+    const payload = { param: this.param }; 
+  
+    this.http.post<User[]>(url, payload, { headers }).subscribe({
+      next: (data) => {
+        if (Array.isArray(data)) {
+          this.users = data;
+        } else if (data) {
+          this.users = [data]; 
+        } else {
+          this.users = [];
+          alert('Không tìm thấy người dùng nào phù hợp.');
+        }
+      },
+      error: (err) => {
+        console.error('Lỗi khi tìm kiếm người dùng:', err);
+        alert('Không thể tìm kiếm người dùng.');
+      },
+    });
+  }
+
+  // phân trang
+  currentPage: number = 1; 
+  pageSize: number = 10; 
+  paginatedUsers: User[] = []; 
+  totalPages: number = 1; 
+
+  // Lấy toàn bộ dữ liệu và thiết lập phân trang
+  loadUsers(): void {
+    const token = localStorage.getItem('authToken');
+    const headers = { Authorization: `Bearer ${token}` };
+    const url = '/api/admin/getUserByRole?role=ROLE_USER';
+
+    this.http.get<User[]>(url, { headers }).subscribe({
+      next: (data) => {
+        this.users = data;
+        this.totalPages = Math.ceil(this.users.length / this.pageSize); 
+        this.updatePagination();
+      },
+      error: (err) => {
+        console.error('Lỗi khi gọi API:', err);
+      },
+    });
+  }
+
+  // Cập nhật danh sách người dùng hiển thị theo trang
+  updatePagination(): void {
+    const startIndex = (this.currentPage - 1) * this.pageSize;
+    const endIndex = startIndex + this.pageSize;
+    this.paginatedUsers = this.users.slice(startIndex, endIndex); 
+  }
+
+  // Thay đổi trang
+  goToPage(page: number): void {
+    if (page < 1 || page > this.totalPages) return; 
+    this.currentPage = page;
+    this.updatePagination();
+  }
+
 }

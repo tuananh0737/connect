@@ -1,79 +1,101 @@
-<div class="genre">
-    <h1>Danh sách thể loại</h1>
-    <div class="search-form">
-      <input type="text" id="searchInput" placeholder="Search by genre.name"
-      [(ngModel)]="searchQuery">
-      <button (click)="performSearch()">Search</button>
-    </div>
-
-    <table border="1" [cellSpacing]="0" [cellPadding]="4">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Tên</th>
-                <th>Chi tiết thể loại</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let genre of genres">
-                <td>{{ genre.id }}</td>
-                <td>{{ genre.name }}</td>
-                <td>{{ genre.details }}</td>
-                <td class="action">
-                    <img src="assets/edit.png" alt="Edit" (click)="openEditGenreForm(genre)" />
-                    <img src="assets/trash.png" alt="Delete" (click)="deleteGenre(genre.id)" />
-                  </td>    
-            </tr>
-        </tbody>
-    </table>
-
-    <button class="add-genre-btn" (click)="openAddGenreForm()">Add Genre</button>
-</div>
-
-<div *ngIf="showAddGenreForm" class="overlay">
-    <div class="form-container" >
-        <h2>Thêm thể loại</h2>
-        <form (ngSubmit)="addGenre()">
-
-            <label for="name">Name</label>
-            <input type="text" id="name" [(ngModel)]="newGenre.name" name="name" required />
-
-            <label for="details">Details</label>
-            <input type="text" id="details" [(ngModel)]="newGenre.details" name="details" required />
-
-            <div class="button-group">
-                <button type="submit" class="add-btn">Add</button>
-                <button type="button" class="cancel-btn" (click)="closeAddGenreForm()">Cancel</button>
-            </div>
-        </form>
-    </div>
-</div>
-
-<div *ngIf="showDeleteConfirm" class="overlay">
-    <div class="overlay-content">
-      <p>Bạn có chắc chắn muốn xóa <strong>{{ selectedGenre?.name }}</strong> không?</p>
-      <div class="button-group">
-        <button (click)="confirmDelete()">Có</button>
-        <button (click)="cancelDelete()">Không</button>
-      </div>
-    </div>
-  </div>
-
-  <div *ngIf="deleteSuccessful" class="overlay">
-    <div class="overlay-content">
-      <p>Xóa thể loại thành công</p>
-      <div class="button-group">
-        <button (click)="cancelDelete()">Đóng</button>
-      </div>
+<div class="container py-4">
+  <h1 class="mb-4">Danh sách thể loại</h1>
+  
+  <div class="mb-4">
+    <div class="input-group">
+      <input type="text" id="searchInput" class="form-control" placeholder="Search by genre.name" [(ngModel)]="searchQuery">
+      <button class="btn btn-primary" (click)="performSearch()">Search</button>
     </div>
   </div>
   
-  <div *ngIf="updateSuccessful" class="overlay">
-    <div class="overlay-content">
-      <p>Cập nhật thành công</p>
-      <div class="button-group">
-        <button (click)="cancel()">Đóng</button>
+  <table class="table table-bordered table-striped">
+    <thead class="table-light">
+      <tr>
+        <th>ID</th>
+        <th>Tên</th>
+        <th>Chi tiết thể loại</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let genre of genres">
+        <td>{{ genre.id }}</td>
+        <td>{{ genre.name }}</td>
+        <td>{{ genre.details }}</td>
+        <td>
+          <div class="action-buttons">
+            <button class="btn btn-sm btn-outline-primary" (click)="openEditGenreForm(genre)">
+              <img src="assets/edit.png" alt="Edit" style="width: 24px;">
+            </button>
+            <button class="btn btn-sm btn-outline-danger" (click)="deleteGenre(genre.id)">
+              <img src="assets/trash.png" alt="Delete" style="width: 24px;">
+            </button>
+          </div>
+        </td>
+        
+      </tr>
+    </tbody>
+  </table>
+  
+  <button class="btn btn-success" (click)="openAddGenreForm()">Add Genre</button>
+
+  <div *ngIf="showAddGenreForm" class="modal d-block" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Thêm Thể Loại</h5>
+          <button type="button" class="btn-close" (click)="closeAddGenreForm()"></button>
+        </div>
+        <form (ngSubmit)="addGenre()">
+          <div class="modal-body">
+            <div class="mb-3">
+              <label for="name" class="form-label">Tên thể loại:</label>
+              <input type="text" id="name" class="form-control" [(ngModel)]="newGenre.name" name="name" required>
+            </div>
+            <div class="mb-3">
+              <label for="details" class="form-label">Chi tiết thể loại:</label>
+              <input type="text" id="details" class="form-control" [(ngModel)]="newGenre.details" name="details" required>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Add</button>
+            <button type="button" class="btn btn-secondary" (click)="closeAddGenreForm()">Cancel</button>
+          </div>
+        </form>
       </div>
     </div>
   </div>
+
+  <div *ngIf="showDeleteConfirm" class="modal d-block" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Xác nhận xóa</h5>
+        </div>
+        <div class="modal-body">
+          <p>Bạn có chắc chắn muốn xóa <strong>{{ selectedGenre?.name }}</strong> không?</p>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-danger" (click)="confirmDelete()">Có</button>
+          <button class="btn btn-secondary" (click)="cancelDelete()">Không</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="deleteSuccessful || updateSuccessful" class="modal d-block" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">{{ deleteSuccessful ? 'Xóa Thành Công' : 'Cập Nhật Thành Công' }}</h5>
+        </div>
+        <div class="modal-body">
+          <p>{{ deleteSuccessful ? 'Xóa thể loại thành công' : 'Cập nhật thành công' }}</p>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" (click)="cancel()">Đóng</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

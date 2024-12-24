@@ -19,6 +19,7 @@ import { UserComponent } from './admin/user/user.component';
 import { BorrowBookComponent } from './borrow-book/borrow-book.component';
 import { DecodeQrComponent } from './decode-qr/decode-qr.component';
 import { CommentComponent } from './comment/comment.component';
+import { DeCodeQRComponent } from './librarian/de-code-qr/de-code-qr.component';
 
 
 @NgModule({
@@ -37,7 +38,8 @@ import { CommentComponent } from './comment/comment.component';
     UserComponent,
     BorrowBookComponent,
     DecodeQrComponent,
-    CommentComponent
+    CommentComponent,
+    DeCodeQRComponent
     
   ],
   imports: [

@@ -1,100 +1,47 @@
-body {
-  font-family: 'Arial', sans-serif;
-  margin: 0;
-  padding: 0;
-  background-color: #f4f4f4;
+/* .container {
+  background: linear-gradient(135deg, #fff, #04ad10) !important; 
+} */
+
+.card {
+  margin-bottom: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.welcome-section {
-  text-align: center;
-  padding: 40px 0;
-  background-color: white;
+.card-img-top {
+  height: 200px;
+  object-fit: cover;
+}
+
+.card-title {
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+.card-text {
+  font-size: 0.9rem;
+}
+
+.genre-card {
+  background-color: #f8f9fa;
   border-radius: 8px;
   margin-bottom: 20px;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #6c757d;
 }
 
-.welcome-section h1 {
-  font-size: 36px;
-  color: #333;
+.genre-card:hover {
+  background-color: #e9ecef;
+  color: #495057;
+  transform: scale(1.05);
+  transition: all 0.3s ease;
 }
 
-.welcome-section p {
-  font-size: 18px;
-  color: #666;
+.modal-title {
+  font-size: 1.5rem;
+  font-weight: bold;
 }
 
-.book-categories {
-  margin-bottom: 20px;
-}
-
-.book-categories h2 {
-  font-size: 24px;
+.modal-body p {
   margin-bottom: 10px;
-}
-
-.categories {
-  display: flex;
-  gap: 20px;
-  flex-wrap: wrap;
-}
-
-.category-card {
-  background-color: white;
-  border-radius: 8px;
-  padding: 20px;
-  flex: 1;
-  min-width: 200px;
-  text-align: center;
-}
-
-.category-card h3 {
-  font-size: 20px;
-}
-
-.category-card p {
-  font-size: 16px;
-  color: #666;
-}
-
-.recent-books h2 {
-  font-size: 24px;
-  margin-bottom: 10px;
-}
-
-.books {
-  display: flex;
-  gap: 20px;
-  flex-wrap: wrap;
-}
-
-.book-card {
-  background-color: white;
-  border-radius: 8px;
-  padding: 10px;
-  text-align: center;
-  width: 150px;
-}
-
-.book-card img {
-  width: 100%;
-  border-radius: 8px;
-}
-
-.book-card h3 {
-  font-size: 18px;
-  margin: 10px 0 5px;
-}
-
-.book-card p {
-  font-size: 14px;
-  color: #666;
-}
-
-.book-card button {
-  padding: 5px 10px;
-  background-color: #444;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
 }

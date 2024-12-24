@@ -115,7 +115,6 @@ export class BookComponent implements OnInit {
 
   selectUser(userId: number): void {
     this.selectedUserId = userId;
-    alert(`Người dùng với ID ${userId} đã được chọn.`);
   }
 
   confirmBorrow(): void {
@@ -146,9 +145,10 @@ export class BookComponent implements OnInit {
       },
       error: (err) => {
         console.error('Lỗi khi mượn sách:', err);
+        alert('Đã xảy ra lỗi khi mượn sách. Vui lòng thử lại!');
       },
     });
-  }
+  } 
 
   closeBorrowBookForm(): void {
     this.showBorrowBook = false;
