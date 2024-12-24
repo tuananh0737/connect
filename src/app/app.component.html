@@ -1,22 +1,104 @@
-<nav *ngIf="userRole === 'ROLE_USER'" mat-tab-nav-bar>
-	<a mat-tab-link routerLink="/home">Bookreads</a>
-	<a mat-tab-link routerLink="/mybook">Danh sách yêu thích</a>
-	<a mat-tab-link routerLink="/borrow">Sách đã mượn</a>
-	<a mat-tab-link routerLink="/booklist">Tìm kiếm</a>
-	<a *ngIf="!isLoggedIn" mat-tab-link routerLink="/login">Login</a>
-	<a *ngIf="!isLoggedIn" mat-tab-link routerLink="/sign-up">Sign Up</a>
-	<a *ngIf="isLoggedIn" mat-tab-link routerLink="/user-info">Info</a>
-	<a *ngIf="isLoggedIn" mat-tab-link (click)="logout()">Logout</a>
+<nav *ngIf="userRole === 'ROLE_USER'" class="navbar navbar-expand-lg navbar-dark bg-success">
+	<div class="container-fluid">
+	  <a class="navbar-brand" routerLink="/home">Bookreads</a>
+	  <button
+		class="navbar-toggler"
+		type="button"
+		data-bs-toggle="collapse"
+		data-bs-target="#userNavbar"
+		aria-controls="userNavbar"
+		aria-expanded="false"
+		aria-label="Toggle navigation"
+	  >
+		<span class="navbar-toggler-icon"></span>
+	  </button>
+	  <div class="collapse navbar-collapse" id="userNavbar">
+		<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+		  <li class="nav-item">
+			<a class="nav-link" routerLink="/mybook">Danh sách yêu thích</a>
+		  </li>
+		  <li class="nav-item">
+			<a class="nav-link" routerLink="/borrow">Sách đã mượn</a>
+		  </li>
+		  <li class="nav-item">
+			<a class="nav-link" routerLink="/booklist">Tìm kiếm</a>
+		  </li>
+		  <li class="nav-item" *ngIf="!isLoggedIn">
+			<a class="nav-link" routerLink="/login">Login</a>
+		  </li>
+		  <li class="nav-item" *ngIf="!isLoggedIn">
+			<a class="nav-link" routerLink="/sign-up">Sign Up</a>
+		  </li>
+		  <li class="nav-item" *ngIf="isLoggedIn">
+			<a class="nav-link" routerLink="/user-info">Info</a>
+		  </li>
+		  <li class="nav-item dropdown" *ngIf="isLoggedIn">
+			<a
+			  class="nav-link dropdown-toggle"
+			  id="notificationDropdown"
+			  role="button"
+			  data-bs-toggle="dropdown"
+			  aria-expanded="false"
+			>
+			  Notification <span *ngIf="notifications.length > 0">({{ notifications.length }})</span>
+			</a>
+			<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationDropdown">
+			  <li *ngIf="notifications.length > 0; else noNotifications">
+				<div *ngFor="let notification of notifications" class="dropdown-item">
+				  <div class="fw-bold">{{ notification.content }}</div>
+				  <div class="text-muted">{{ formatDate(notification.createdDate) }}</div>
+				</div>
+			  </li>
+			  <ng-template #noNotifications>
+				<li class="dropdown-item text-muted">No notifications available.</li>
+			  </ng-template>
+			</ul>
+		  </li>
+		  <li class="nav-item" *ngIf="isLoggedIn">
+			<a class="nav-link" (click)="logout()">Logout</a>
+		  </li>
+		</ul>
+	  </div>
+	</div>
   </nav>
   
-  <nav *ngIf="userRole === 'ROLE_ADMIN'" mat-tab-nav-bar>
-	<a mat-tab-link routerLink="/admin/admin-home">Bookreads</a>
-	<a mat-tab-link routerLink="/admin/user">User</a>
-	<a mat-tab-link routerLink="/admin/book">Book</a>
-	<a mat-tab-link routerLink="/admin/author">Author</a>
-	<a mat-tab-link routerLink="/admin/genre">Genre</a>
-	<a *ngIf="isLoggedIn" mat-tab-link (click)="logout()">Logout</a>
+  <nav *ngIf="userRole === 'ROLE_ADMIN'" class="navbar navbar-expand-lg navbar-dark bg-success">
+	<div class="container-fluid">
+	  <a class="navbar-brand" routerLink="/admin/admin-home">Bookreads</a>
+	  <button
+		class="navbar-toggler"
+		type="button"
+		data-bs-toggle="collapse"
+		data-bs-target="#adminNavbar"
+		aria-controls="adminNavbar"
+		aria-expanded="false"
+		aria-label="Toggle navigation"
+	  >
+		<span class="navbar-toggler-icon"></span>
+	  </button>
+	  <div class="collapse navbar-collapse" id="adminNavbar">
+		<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+		  <li class="nav-item">
+			<a class="nav-link" routerLink="/decodeQr">decodeQr</a>
+		  </li>
+		  <li class="nav-item">
+			<a class="nav-link" routerLink="/admin/user">User</a>
+		  </li>
+		  <li class="nav-item">
+			<a class="nav-link" routerLink="/admin/book">Book</a>
+		  </li>
+		  <li class="nav-item">
+			<a class="nav-link" routerLink="/admin/author">Author</a>
+		  </li>
+		  <li class="nav-item">
+			<a class="nav-link" routerLink="/admin/genre">Genre</a>
+		  </li>
+		  <li class="nav-item">
+			<a class="nav-link" (click)="logout()">Logout</a>
+		  </li>
+		</ul>
+	  </div>
+	</div>
   </nav>
-  
   <router-outlet></router-outlet>
   

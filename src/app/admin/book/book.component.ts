@@ -300,6 +300,7 @@ export class BookComponent implements OnInit {
 
   showDeleteConfirm: boolean = false;
   bookToDeleteId: number | null = null;
+  deleteSuccessful: boolean = false;
 
   deleteBook(bookId: number): void {
     const book = this.books.find((b) => b.id === bookId);
@@ -326,7 +327,7 @@ export class BookComponent implements OnInit {
         this.books = this.books.filter((b) => b.id !== this.bookToDeleteId);
         this.showDeleteConfirm = false;
         this.bookToDeleteId = null;
-        alert('Sách đã được xóa thành công!');
+        this.deleteSuccessful = true;
       },
       error: (err) => {
         console.error('Lỗi khi xóa sách:', err);
@@ -339,6 +340,7 @@ export class BookComponent implements OnInit {
   cancelDelete(): void {
     this.showDeleteConfirm = false;
     this.bookToDeleteId = null;
+    this.deleteSuccessful = false;
   }
 
   cancel(): void {

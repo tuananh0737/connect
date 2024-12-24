@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { ZXingScannerModule } from '@zxing/ngx-scanner';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BookListComponent } from './book-list/book-list.component';
@@ -17,6 +17,9 @@ import { GenreComponent } from './admin/genre/genre.component';
 import { AdminHomeComponent } from './admin/admin-home/admin-home.component';
 import { UserComponent } from './admin/user/user.component';
 import { BorrowBookComponent } from './borrow-book/borrow-book.component';
+import { DecodeQrComponent } from './decode-qr/decode-qr.component';
+import { CommentComponent } from './comment/comment.component';
+
 
 @NgModule({
   declarations: [
@@ -32,7 +35,10 @@ import { BorrowBookComponent } from './borrow-book/borrow-book.component';
     GenreComponent,
     AdminHomeComponent,
     UserComponent,
-    BorrowBookComponent
+    BorrowBookComponent,
+    DecodeQrComponent,
+    CommentComponent
+    
   ],
   imports: [
     BrowserModule,
@@ -40,6 +46,8 @@ import { BorrowBookComponent } from './borrow-book/borrow-book.component';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    ZXingScannerModule
+    
   ],
   providers: [],
   bootstrap: [AppComponent]

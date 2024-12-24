@@ -10,7 +10,7 @@ interface User {
   actived: boolean;
   phone: string;
   borrowBook: string;
-  pageInYear:number;
+  idCard: string;
 }
 
 interface BorrowedBook {
@@ -29,6 +29,8 @@ interface BorrowedBook {
 })
 export class UserComponent implements OnInit {
   users: User[] = [];
+  selectedUser: User | null = null;
+  showEditForm: boolean = false;
 
   constructor(private http: HttpClient) {}
 
@@ -80,43 +82,47 @@ export class UserComponent implements OnInit {
   showDeleteConfirm: boolean = false;
   userToDeleteId: number | null = null;
 
-  deleteUser(userId: number): void {
-    const user = this.users.find((u) => u.id === userId);
-    if (user) {
-      this.userToDeleteId = userId;
-      this.showDeleteConfirm = true;
-    }
+  openEditUserForm(user: User): void {
+    this.selectedUser = { ...user };
+    this.showEditForm = true;
   }
+  
+  errorMessage: string | null = null; 
 
-  confirmDelete(): void {
-    if (!this.userToDeleteId) return;
-
+  saveUser(): void {
+    if (!this.selectedUser) return;
+  
     const token = localStorage.getItem('authToken');
     if (!token) {
-      alert('Bạn chưa đăng nhập!');
+      this.errorMessage = 'Bạn chưa đăng nhập!';
       return;
     }
-
+  
     const headers = { Authorization: `Bearer ${token}` };
-    const url = `/api/admin/delete-user?id=${this.userToDeleteId}`;
-
-    this.http.delete(url, { headers }).subscribe({
-      next: () => {
-        this.users = this.users.filter((u) => u.id !== this.userToDeleteId);
-        this.showDeleteConfirm = false;
-        this.userToDeleteId = null;
-        alert('Sách đã được xóa thành công!');
+    const url = '/api/admin/update-user';
+  
+    this.http.post<User>(url, this.selectedUser, { headers }).subscribe({
+      next: (data) => {
+        const index = this.users.findIndex((u) => u.id === this.selectedUser?.id);
+        if (index !== -1) {
+          this.users[index] = data;
+        }
+        this.closeEditForm();
+        alert('Cập nhật người dùng thành công!');
       },
       error: (err) => {
-        console.error('Lỗi khi xóa sách:', err);
-        alert('Đã xảy ra lỗi khi xóa sách.');
-        this.showDeleteConfirm = false;
-      }
+        if (err.error) {
+          this.errorMessage = err.error; 
+        } else {
+          this.errorMessage = 'Đã xảy ra lỗi khi cập nhật người dùng.';
+        }
+      },
     });
   }
-
-  cancelDelete(): void {
-    this.showDeleteConfirm = false;
-    this.userToDeleteId = null;
+  
+  closeEditForm(): void {
+    this.showEditForm = false;
+    this.selectedUser = null;
+    this.errorMessage = null;
   }
 }

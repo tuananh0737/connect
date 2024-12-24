@@ -140,7 +140,7 @@ export class AuthorComponent implements OnInit {
 
     this.http.delete(url, {headers}).subscribe({
       next:() => {
-        this.authors = this.authors.filter((g) => g.id !== this.authorToDeleteId);
+        this.authors = this.authors.filter((a) => a.id !== this.authorToDeleteId);
         this.showAddAuthorForm = false;
         this.authorToDeleteId = null;
         this.deleteSuccessful = true;

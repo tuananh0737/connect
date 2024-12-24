@@ -1,0 +1,29 @@
+<div class="comment-list-container">
+    <table class="table table-bordered table-striped">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">Tên sách</th>
+          <th scope="col">Bình luận</th>
+          <th scope="col">Ngày tạo</th>
+          <th scope="col">Đánh giá</th>
+          <th scope="col">Thao tác</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let comment of comments">
+          <td>
+            <span class="book-name text-primary" (click)="viewBookDetails(comment.bookName)">
+              {{ comment.bookName }}
+            </span>
+          </td>
+          <td>{{ comment.content }}</td>
+          <td>{{ comment.createdDate | date: 'dd/MM/yyyy' }}</td>
+          <td>{{ comment.star }}</td>
+          <td>
+            <button (click)="deleteComment(comment.id)" class="btn btn-danger btn-sm">Xóa</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  

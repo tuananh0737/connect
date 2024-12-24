@@ -85,29 +85,115 @@ export class BookListComponent implements OnInit {
     this.searchQuery = ''; 
   }
 
-  addBookmark(book: Book): void {
+  addBookmark(book: Book | null): void {
+    if (!book) {
+      console.error('Không thể thêm bookmark vì sách không hợp lệ.');
+      return;
+    }
+  
     const token = localStorage.getItem('authToken');
     if (!token) {
       alert('Bạn cần đăng nhập để sử dụng chức năng này.');
       return;
     }
-
+  
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     });
-
+  
     const body = { book: { id: book.id } };
-
+  
     this.http.post('api/user/add-bookmark', body, { headers }).subscribe({
       next: () => {
         alert('Đã thêm sách vào bookmark.');
       },
       error: (err) => {
-        const errorMessage = err.error?.message || 'Không thể thêm sách vào bookmark.';
+        const errorMessage =
+          err.error?.message || 'Không thể thêm sách vào bookmark.';
         console.error('Lỗi khi thêm bookmark:', err);
         alert(errorMessage);
-      }
+      },
     });
   }
+  
+  //binh luan
+  showCommentForm: boolean = false; // Hiển thị overlay form bình luận
+commentContent: string = ''; // Nội dung bình luận
+commentStar: number = 5; // Mặc định 5 sao
+currentBookId: number | null = null; // ID sách hiện tại để bình luận
+
+openCommentForm(book: Book | null): void {
+  if (!book) {
+    console.error('Không thể mở form vì sách không hợp lệ.');
+    return;
+  }
+
+  this.showCommentForm = true;
+  this.currentBookId = book.id;
+  this.commentContent = '';
+  this.commentStar = 5;
+}
+
+
+closeCommentForm(): void {
+  this.showCommentForm = false;
+  this.currentBookId = null;
+  this.commentContent = '';
+  this.commentStar = 5;
+}
+
+stars = [1, 2, 3, 4, 5]; 
+
+setStarRating(rating: number): void {
+  this.commentStar = rating;
+}
+
+
+submitComment(): void {
+  if (!this.currentBookId) {
+    console.error('Không thể gửi bình luận vì sách không hợp lệ.');
+    return;
+  }
+
+  if (!this.commentContent.trim()) {
+    alert('Vui lòng nhập nội dung bình luận.');
+    return;
+  }
+
+  if (this.commentStar < 1 || this.commentStar > 5) {
+    alert('Số sao đánh giá phải từ 1 đến 5.');
+    return;
+  }
+
+  const token = localStorage.getItem('authToken');
+  if (!token) {
+    alert('Bạn cần đăng nhập để sử dụng chức năng này.');
+    return;
+  }
+
+  const headers = new HttpHeaders({
+    Authorization: `Bearer ${token}`,
+    'Content-Type': 'application/json',
+  });
+
+  const body = {
+    content: this.commentContent,
+    star: this.commentStar,
+    book: { id: this.currentBookId },
+  };
+
+  this.http.post('/api/user/add-comment', body, { headers }).subscribe({
+    next: () => {
+      alert('Bình luận đã được gửi thành công.');
+      this.closeCommentForm();
+    },
+    error: (err) => {
+      const errorMessage = err.error?.message || 'Không thể gửi bình luận.';
+      console.error('Lỗi khi gửi bình luận:', err);
+      alert(errorMessage);
+    },
+  });
+}
+
 }

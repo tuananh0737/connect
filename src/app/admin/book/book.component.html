@@ -30,7 +30,7 @@
         <td>{{ book.numberPage }}</td>
         <td>{{ book.publishYear }}</td>
         <td>
-          <button (click)="showDetails(book)">View</button>
+          <button class="view" (click)="showDetails(book)">View</button>
         </td>
         <td>{{ book.quantity }}</td>
         <td class="action">
@@ -41,9 +41,29 @@
     </tbody>
   </table>
 
+  <div *ngIf="showDeleteConfirm" class="overlay">
+    <div class="overlay-content">
+      <p>Bạn có chắc chắn muốn xóa <strong>{{ selectedBook?.name }}</strong> không?</p>
+      <div class="button-group">
+        <button (click)="confirmDelete()">Có</button>
+        <button (click)="cancelDelete()">Không</button>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="deleteSuccessful" class="overlay">
+    <div class="overlay-content">
+      <p>Xóa Tác giả thành công</p>
+      <div class="button-group">
+        <button (click)="cancelDelete()">Đóng</button>
+      </div>
+    </div>
+  </div>
+
   <button class="add-book-btn" (click)="openAddBookForm()">Add Book</button>
   <div  class="overlay" *ngIf="selectedBook">
     <div class="form-container">
+      <!-- <span class="close" (click)="closeForm()">&times;</span> -->
       <h2>Book Details</h2>
       <p><strong>Name:</strong> {{ selectedBook.name }}</p>
       <p><strong>Author:</strong> {{ selectedBook.author.fullname }}</p>
@@ -52,8 +72,8 @@
       <p><strong>Publish Year:</strong> {{ selectedBook.publishYear }}</p>
       <p><strong>Details:</strong> {{ selectedBook.description }}</p>
       <p><strong>Quantity:</strong> {{ selectedBook.quantity }}</p>
-      <button (click)="borrow(selectedBook)">Borrow</button>
-      <button (click)="closeForm()">Close</button>
+      <button class="borrow-btn" (click)="borrow(selectedBook)">Borrow</button>
+      <button class="close-btn" (click)="closeForm()">Close</button>
     </div>
 </div>
 <div *ngIf="showBorrowBook" class="overlay">

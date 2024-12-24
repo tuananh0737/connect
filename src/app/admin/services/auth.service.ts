@@ -8,7 +8,6 @@ import { Observable } from 'rxjs';
 export class AuthService {
   private apiUrlLogin = 'http://localhost:8081/api/login';
   private apiUrlRegis = 'http://localhost:8081/api/regis';  
-  private apiUrlBookmark = 'http://localhost:8081/api/user/find-bookmark-by-user';
 
   constructor(private http: HttpClient) {}
 
@@ -28,11 +27,5 @@ export class AuthService {
     const body = { username, password, fullname };
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.http.post<any>(this.apiUrlRegis, body, { headers });
-  }
-
-  getUserBookmarks(): Observable<any> {
-    const token = localStorage.getItem('authToken');
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this.http.post(this.apiUrlBookmark, { headers });
   }
 }

@@ -20,11 +20,10 @@
                 <td>{{user.actived ? 'hoạt động' : 'không hoạt động' }}</td>
                 <td>{{user.phone}}</td>    
                 <td>
-                    <button (click)="showBorrowBook(user.id)">View</button>
+                    <button class="view" (click)="showBorrowBook(user.id)">View</button>
                 </td>                
                 <td class="action">
-                    <img src="assets/edit.png" alt="Edit"  />
-                    <img src="assets/trash.png" alt="Delete" (click)="deleteUser(user.id)" />
+                    <img src="assets/edit.png" alt="Edit" (click)="openEditUserForm(user)" />
                   </td>    
             </tr>
         </tbody>
@@ -55,5 +54,31 @@
         </table>
     </div>
 </div>
-
 </div>
+
+<div *ngIf="showEditForm" class="overlay">
+    <div class="form-container">
+      <h2>Chỉnh sửa người dùng</h2>     
+      <label>Fullname:</label>
+      <input [(ngModel)]="selectedUser!.fullname" /><br />
+
+      <label>Số điện thoại:</label>
+      <input [(ngModel)]="selectedUser!.phone" /><br />
+
+      <label>Mã người dùng:</label>
+      <input [(ngModel)]="selectedUser!.idCard" /><br />
+
+        <label class="status-label">Trạng thái:</label>
+        <label class="switch">
+        <input type="checkbox" [(ngModel)]="selectedUser!.actived" />
+        <span class="slider round"></span>
+        </label>
+ 
+
+      <div *ngIf="errorMessage" class="error-message">
+        {{ errorMessage }}
+      </div> 
+      <button (click)="saveUser()">Lưu</button>
+      <button (click)="closeEditForm()">Hủy</button>
+    </div>
+  </div>

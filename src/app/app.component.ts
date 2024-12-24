@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
@@ -10,6 +10,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 export class AppComponent implements OnInit {
   isLoggedIn: boolean = false;
   userRole: string = '';
+  showNotificationMenu: boolean = false;
+  notifications: any[] = [];
 
   constructor(private router: Router, private http: HttpClient) {}
 
@@ -18,6 +20,7 @@ export class AppComponent implements OnInit {
     if (token) {
       this.isLoggedIn = true;
       this.fetchUserRole(token);
+      this.fetchNotifications(token); // Gọi API lấy thông báo
     } else {
       this.userRole = 'ROLE_USER'; 
     }
@@ -29,11 +32,26 @@ export class AppComponent implements OnInit {
       next: (response: any) => {
         this.userRole = response?.role || '';
       },
-      error: (error) => {
-        console.error('Failed to fetch user role:', error);
+      error: () => {
         this.userRole = 'ROLE_USER'; 
       }
     });
+  }
+
+  fetchNotifications(token: string): void {
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    this.http.get<any[]>('/api/user/notifications', { headers }).subscribe({
+      next: (data) => {
+        this.notifications = data;
+      },
+      error: () => {
+        this.notifications = [];
+      }
+    });
+  }
+
+  toggleNotificationMenu(): void {
+    this.showNotificationMenu = !this.showNotificationMenu;
   }
 
   logout(): void {
@@ -42,4 +60,17 @@ export class AppComponent implements OnInit {
     this.userRole = 'ROLE_USER';
     this.router.navigate(['/home']);
   }
+
+  @HostListener('document:click', ['$event'])
+  closeMenu(event: Event): void {
+    const target = event.target as HTMLElement;
+    if (!target.closest('.notification-link') && !target.closest('.notification-menu')) {
+      this.showNotificationMenu = false;
+    }
+  }
+  formatDate(dateString: string): string {
+    const date = new Date(dateString);
+    return date.toLocaleString(); // Định dạng ngày giờ theo ngôn ngữ của trình duyệt
+  }
+  
 }
