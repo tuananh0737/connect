@@ -20,7 +20,7 @@ export class AppComponent implements OnInit {
     if (token) {
       this.isLoggedIn = true;
       this.fetchUserRole(token);
-      this.fetchNotifications(token); // Gọi API lấy thông báo
+      this.fetchNotifications(token);
     } else {
       this.userRole = 'ROLE_USER'; 
     }

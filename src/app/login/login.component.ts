@@ -71,7 +71,11 @@ export class LoginComponent {
         } else if (role === 'ROLE_USER') {
           this.router.navigate(['/home']).then(() => { window.location.reload();
           });
-        } else {
+        } else if (role === 'ROLE_LIBRARIAN') {
+          this.router.navigate(['/home']).then(() => { window.location.reload();
+          });
+        }
+          else {
           alert('Unknown role');
         }
       },

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { ZXingScannerModule } from '@zxing/ngx-scanner';
+import { ZXingScannerComponent, ZXingScannerModule } from '@zxing/ngx-scanner';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BookListComponent } from './book-list/book-list.component';
@@ -20,6 +20,7 @@ import { BorrowBookComponent } from './borrow-book/borrow-book.component';
 import { DecodeQrComponent } from './decode-qr/decode-qr.component';
 import { CommentComponent } from './comment/comment.component';
 import { DeCodeQRComponent } from './librarian/de-code-qr/de-code-qr.component';
+import { BookLibrarianComponent } from './librarian/book/book.component';
 
 
 @NgModule({
@@ -39,7 +40,8 @@ import { DeCodeQRComponent } from './librarian/de-code-qr/de-code-qr.component';
     BorrowBookComponent,
     DecodeQrComponent,
     CommentComponent,
-    DeCodeQRComponent
+    DeCodeQRComponent,
+    BookLibrarianComponent
     
   ],
   imports: [
@@ -49,7 +51,7 @@ import { DeCodeQRComponent } from './librarian/de-code-qr/de-code-qr.component';
     FormsModule,
     ReactiveFormsModule,
     ZXingScannerModule
-    
+
   ],
   providers: [],
   bootstrap: [AppComponent]

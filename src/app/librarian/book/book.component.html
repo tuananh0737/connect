@@ -1,1 +1,112 @@
-<p>book works!</p>
+<div class="container">
+    <h1 class="my-4">Tìm kiếm</h1>
+    <div class="input-group mb-4">
+        <input 
+            type="text" 
+            id="searchInput" 
+            class="form-control" 
+            placeholder="Search by book title, author, or genres" 
+            [(ngModel)]="searchQuery"
+        >
+        <button class="btn btn-primary" (click)="performSearch()">Search</button>
+    </div>
+
+    <table class="table table-bordered table-hover">
+        <thead class="table-light">
+            <tr>
+                <th>Name</th>
+                <th>Author</th>
+                <th>Genre</th>
+                <th>Number Page</th>
+                <th>Publish Year</th>
+                <th>Details</th>
+                <th>Quantity</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let book of books; trackBy: trackByBookId">
+                <td>{{ book.name }}</td>
+                <td>{{ book.author.fullname }} ({{ book.author.nationality }})</td>
+                <td>{{ book.genres.name }}</td>
+                <td>{{ book.numberPage }}</td>
+                <td>{{ book.publishYear }}</td>
+                <td>
+                    <button class="btn btn-info btn-sm" (click)="showDetails(book)">View</button>
+                </td>
+                <td>{{ book.quantity }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="modal fade show d-block" *ngIf="selectedBook">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Book Details</h5>
+              <button class="btn-close" (click)="closeForm()"></button>
+            </div>
+            <div class="modal-body">
+              <p><strong>Name:</strong> {{ selectedBook.name }}</p>
+              <p><strong>Author:</strong> {{ selectedBook.author.fullname }}</p>
+              <p><strong>Genre:</strong> {{ selectedBook.genres.name }}</p>
+              <p><strong>Number Page:</strong> {{ selectedBook.numberPage }}</p>
+              <p><strong>Publish Year:</strong> {{ selectedBook.publishYear }}</p>
+              <p><strong>Details:</strong> {{ selectedBook.description }}</p>
+              <p><strong>Quantity:</strong> {{ selectedBook.quantity }}</p>
+            </div>
+            <div class="modal-footer">
+              <button class="btn btn-primary" (click)="borrow(selectedBook)">Borrow</button>
+              <button class="btn btn-secondary" (click)="closeForm()">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    <ng-template #borrowBookModal>
+        <div class="modal fade show d-block">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Form mượn sách</h5>
+                        <button class="btn-close" (click)="closeBorrowBookForm()"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p><strong>Sách:</strong> {{ selectedBook?.name }}</p>
+                        <div class="input-group mb-3">
+                            <input 
+                                type="text" 
+                                id="searchUserInput" 
+                                class="form-control" 
+                                placeholder="Search by name, idCard, or phone" 
+                                [(ngModel)]="userSearchQuery">
+                            <button class="btn btn-primary" (click)="searchUser()">Search</button>
+                        </div>
+                        <div *ngIf="users.length > 0">
+                            <h5>Kết quả tìm kiếm:</h5>
+                            <ul class="list-group">
+                                <li 
+                                    *ngFor="let user of users" 
+                                    [class.active]="selectedUserId === user.id" 
+                                    class="list-group-item" 
+                                    (click)="selectUser(user.id)">
+                                    <strong>{{ user.fullname }}</strong> - {{ user.phone }} - {{ user.idCard }}
+                                </li>
+                            </ul>
+                        </div>
+                        <div *ngIf="users.length === 0 && userSearchQuery">
+                            <p class="text-muted">Không tìm thấy người dùng nào.</p>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-primary" (click)="confirmBorrow()">Xác nhận</button>
+                        <button class="btn btn-secondary" (click)="closeBorrowBookForm()">Hủy</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+
+    <ng-container *ngIf="showBorrowBook">
+        <ng-container *ngTemplateOutlet="borrowBookModal"></ng-container>
+    </ng-container>
+</div>

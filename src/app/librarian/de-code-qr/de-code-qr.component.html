@@ -1,1 +1,66 @@
-<p>de-code-qr works!</p>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <h2 class="text-center mb-4">QR Code Scanner</h2>
+  
+        <!-- QR Scanner -->
+        <div *ngIf="isScanning; else qrResultTemplate">
+          <zxing-scanner
+            [autostart]="true"
+            (scanSuccess)="onCodeResult($event)"
+            [torch]="false"
+            [tryHarder]="true"
+            class="w-100 scanner-frame"
+          ></zxing-scanner>
+          <div class="text-center mt-3">
+            <p>Position the QR code inside the frame to scan</p>
+          </div>
+        </div>
+  
+        <!-- QR Code Result -->
+        <ng-template #qrResultTemplate>
+          <div class="card text-center">
+            <div class="card-body">
+              <h5 class="card-title">QR Code Result</h5>
+              <p class="card-text">
+                <strong>ID:</strong> {{ qrResult?.id }},
+                <strong>Name:</strong> {{ qrResult?.name }},
+                <strong>Publish Year:</strong> {{ qrResult?.publishYear }}
+              </p>
+              <button class="btn btn-primary" (click)="restartScanning()">Scan Again</button>
+            </div>
+          </div>
+        </ng-template>
+  
+        <!-- Book Details -->
+        <div class="mt-4" *ngIf="bookDetails$ | async as bookDetails">
+          <h4>Book Details</h4>
+          <div *ngIf="bookDetails; else noBookDetails">
+            <p><strong>Title:</strong> {{ bookDetails.name }}</p>
+            <p><strong>Number of Pages:</strong> {{ bookDetails.numberPage }}</p>
+            <p><strong>Publish Year:</strong> {{ bookDetails.publishYear }}</p>
+            <p><strong>Description:</strong> {{ bookDetails.description }}</p>
+            <p><strong>Average Rating:</strong> {{ bookDetails.averageRating }}</p>
+            <p><strong>Quantity Available:</strong> {{ bookDetails.quantity }}</p>
+            <p>
+              <strong>Author:</strong>
+              {{ bookDetails.author.fullname }} ({{ bookDetails.author.nationality }}, 
+              Born: {{ bookDetails.author.birthDay }})
+            </p>
+            <p>
+              <strong>Genre:</strong> {{ bookDetails.genres.name }} - 
+              {{ bookDetails.genres.details }}
+            </p>
+            <p>
+              <strong>Location:</strong> {{ bookDetails.location.room }},
+              {{ bookDetails.location.shelf }}
+            </p>
+          </div>
+          <ng-template #noBookDetails>
+            <p>No book details found for this QR code.</p>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  </div>
+  

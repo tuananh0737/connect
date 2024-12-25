@@ -97,6 +97,7 @@ export class UserComponent implements OnInit {
         }
         this.closeEditForm();
         alert('Cập nhật người dùng thành công!');
+        window.location.reload();
       },
       error: (err) => {
         if (err.error) {

@@ -14,6 +14,8 @@ import { UserComponent } from './admin/user/user.component';
 import { BorrowBookComponent } from './borrow-book/borrow-book.component';
 import { DecodeQrComponent } from './decode-qr/decode-qr.component';
 import { CommentComponent } from './comment/comment.component';
+import { DeCodeQRComponent } from './librarian/de-code-qr/de-code-qr.component';
+import { BookLibrarianComponent } from './librarian/book/book.component';
 
 const routes: Routes = [
   {
@@ -75,6 +77,14 @@ const routes: Routes = [
   {
     path: 'decodeQr',
     component: DecodeQrComponent,
+  },
+  {
+    path: 'librarian/deCodeQR',
+    component: DeCodeQRComponent,
+  },
+  {
+    path: 'librarian/book',
+    component: BookLibrarianComponent,
   },
   {
     path: '',
