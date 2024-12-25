@@ -30,7 +30,7 @@ export class AuthorComponent implements OnInit {
   constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
-    this.http.get<Author[]>('http://localhost:8081/api/public/find-all-author').subscribe({
+    this.http.get<Author[]>('/api/public/find-all-author').subscribe({
       next: (data) => {
         this.authors = data;
       },
@@ -42,7 +42,7 @@ export class AuthorComponent implements OnInit {
 
   performSearch(): void {
     const query = this.searchQuery.toLowerCase().trim();
-    const url = "http://localhost:8081/api/public/search-author";
+    const url = "/api/public/search-author";
   
     this.http.post<Author[]>(url, {param: query}).subscribe({
       next:(data)=> {
@@ -100,10 +100,6 @@ export class AuthorComponent implements OnInit {
       }
     });
   }
-
-  cancel(): void {
-    this.updateSuccessful = false
-  }
   
 
   openEditAuthorForm(author: Author): void {
@@ -150,9 +146,10 @@ export class AuthorComponent implements OnInit {
     });
   }
 
-  cancelDelete(): void {
+  cancel(): void {
     this.showDeleteConfirm = false;
     this.authorToDeleteId = null;
     this.deleteSuccessful = false;
+    this.updateSuccessful = false
   }
 }

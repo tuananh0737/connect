@@ -29,7 +29,7 @@ export class GenreComponent implements OnInit {
   constructor(private http: HttpClient) {}
   
   ngOnInit(): void {
-    this.http.get<Genre[]>('http://localhost:8081/api/public/find-all-genres').subscribe({
+    this.http.get<Genre[]>('/api/public/find-all-genres').subscribe({
       next: (data) => {
         this.genres = data;
       },
@@ -41,7 +41,7 @@ export class GenreComponent implements OnInit {
 
  performSearch(): void {
   const query = this.searchQuery.toLowerCase().trim();
-  const url = "http://localhost:8081/api/public/search-genre";
+  const url = "/api/public/search-genre";
 
   this.http.post<Genre[]>(url, {param: query}).subscribe({
     next:(data)=> {
@@ -142,15 +142,11 @@ export class GenreComponent implements OnInit {
     });
   }
 
-  cancelDelete(): void {
+
+  cancel(): void {
     this.showDeleteConfirm = false;
     this.genreToDeleteId = null;
     this.deleteSuccessful = false;
     this.updateSuccessful = false;
-  }
-
-  cancel(): void {
-    this.updateSuccessful = false;
-    this.deleteSuccessful = false;
   }
 }

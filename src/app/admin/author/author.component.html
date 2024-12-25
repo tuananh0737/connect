@@ -80,7 +80,7 @@
         </div>
         <div class="modal-footer">
           <button class="btn btn-danger" (click)="confirmDelete()">Có</button>
-          <button class="btn btn-secondary" (click)="cancelDelete()">Không</button>
+          <button class="btn btn-secondary" (click)="cancel()">Không</button>
         </div>
       </div>
     </div>
@@ -96,7 +96,7 @@
           <p>{{ deleteSuccessful ? 'Xóa Tác giả thành công' : 'Cập nhật Tác giả thành công' }}</p>
         </div>
         <div class="modal-footer">
-          <button class="btn btn-secondary" (click)="cancelDelete()">Đóng</button>
+          <button class="btn btn-secondary" (click)="cancel()">Đóng</button>
         </div>
       </div>
     </div>
