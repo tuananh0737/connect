@@ -30,14 +30,7 @@ export class AuthorComponent implements OnInit {
   constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
-    this.http.get<Author[]>('/api/public/find-all-author').subscribe({
-      next: (data) => {
-        this.authors = data;
-      },
-      error: (err) => {
-        console.error('Lỗi khi gọi API:', err);
-      }
-    });
+    this.loadAuthors();
   }
 
   performSearch(): void {
@@ -152,4 +145,38 @@ export class AuthorComponent implements OnInit {
     this.deleteSuccessful = false;
     this.updateSuccessful = false
   }
+
+  // phân trang
+  currentPage: number = 1; 
+  pageSize: number = 10; 
+  paginatedAuthors: Author[] = []; 
+  totalPages: number = 1; 
+
+  loadAuthors(): void {
+    const url = '/api/public/find-all-author';
+
+    this.http.get<Author[]>(url).subscribe({
+      next: (data) => {
+        this.authors = data;
+        this.totalPages = Math.ceil(this.authors.length / this.pageSize); 
+        this.updatePagination();
+      },
+      error: (err) => {
+        console.error('Lỗi khi gọi API:', err);
+      },
+    });
+  }
+
+  updatePagination(): void {
+    const startIndex = (this.currentPage - 1) * this.pageSize;
+    const endIndex = startIndex + this.pageSize;
+    this.paginatedAuthors = this.authors.slice(startIndex, endIndex); 
+  }
+
+  goToPage(page: number): void {
+    if (page < 1 || page > this.totalPages) return; 
+    this.currentPage = page;
+    this.updatePagination();
+  }
+
 }

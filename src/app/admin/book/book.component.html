@@ -24,7 +24,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let book of books; trackBy: trackByBookId">
+      <tr *ngFor="let book of paginatedBooks; trackBy: trackByBookId">
         <td>{{ book.name }}</td>
         <td>{{ book.author.fullname }} ({{ book.author.nationality }})</td>
         <td>{{ book.genres.name }}</td>
@@ -47,8 +47,27 @@
       </tr>
     </tbody>
   </table>
+</div>
 
-  <div *ngIf="showDeleteConfirm" class="modal fade show d-block" tabindex="-1">
+<div class="pagination d-flex justify-content-center align-items-center mt-3">
+  <button 
+    class="btn btn-secondary me-2" 
+    [disabled]="currentPage === 1" 
+    (click)="goToPage(currentPage - 1)">
+    Trang trước
+  </button>
+
+  <span class="mx-2">Trang {{ currentPage }} / {{ totalPages }}</span>
+
+  <button 
+    class="btn btn-secondary ms-2" 
+    [disabled]="currentPage === totalPages" 
+    (click)="goToPage(currentPage + 1)">
+    Trang sau
+  </button>
+</div>
+
+<div *ngIf="showDeleteConfirm" class="modal fade show d-block" tabindex="-1">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-body">
@@ -184,4 +203,3 @@
       </div>
     </div>
   </div>
-</div>

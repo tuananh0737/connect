@@ -18,7 +18,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let genre of genres">
+      <tr *ngFor="let genre of paginatedGenres">
         <td>{{ genre.id }}</td>
         <td>{{ genre.name }}</td>
         <td>{{ genre.details }}</td>
@@ -32,10 +32,27 @@
             </button>
           </div>
         </td>
-        
       </tr>
     </tbody>
   </table>
+
+  <div class="pagination d-flex justify-content-center align-items-center mt-3">
+    <button 
+      class="btn btn-secondary me-2" 
+      [disabled]="currentPage === 1" 
+      (click)="goToPage(currentPage - 1)">
+      Trang trước
+    </button>
+  
+    <span class="mx-2">Trang {{ currentPage }} / {{ totalPages }}</span>
+  
+    <button 
+      class="btn btn-secondary ms-2" 
+      [disabled]="currentPage === totalPages" 
+      (click)="goToPage(currentPage + 1)">
+      Trang sau
+    </button>
+  </div>
   
   <button class="btn btn-success" (click)="openAddGenreForm()">Add Genre</button>
 

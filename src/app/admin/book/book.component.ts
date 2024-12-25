@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BookService } from '../services/book.service';
 import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
 
 interface Book {
   id: number;
@@ -31,7 +30,6 @@ export class BookComponent implements OnInit {
   books: Book[] = [];
   originalBooks: Book[] = [];
   selectedBook: Book | null = null;
-  showOutOfStock: boolean = false;
   searchQuery: string = '';
   updateSuccessful: boolean = false;
   showBorrowBook: boolean = false;
@@ -55,19 +53,10 @@ export class BookComponent implements OnInit {
   constructor(
     private bookService: BookService,
     private http: HttpClient,
-    private router: Router
   ) {}
 
   ngOnInit(): void {
-    this.bookService.getBooks().subscribe({
-      next: (data) => {
-        this.books = data;
-        this.originalBooks = [...data];
-      },
-      error: (err) => {
-        console.error('Lỗi khi gọi API:', err);
-      }
-    });
+    this.loadBooks();
   }
 
 
@@ -167,10 +156,6 @@ export class BookComponent implements OnInit {
 
   closeForm(): void {
     this.selectedBook = null;
-  }
-
-  closeOverlay(): void {
-    this.showOutOfStock = false;
   }
 
   performSearch(): void {
@@ -297,7 +282,6 @@ export class BookComponent implements OnInit {
     };
   }
   
-
   showDeleteConfirm: boolean = false;
   bookToDeleteId: number | null = null;
   deleteSuccessful: boolean = false;
@@ -341,9 +325,39 @@ export class BookComponent implements OnInit {
     this.showDeleteConfirm = false;
     this.bookToDeleteId = null;
     this.deleteSuccessful = false;
+    this.updateSuccessful = false;
   }
 
-  cancel(): void {
-    this.updateSuccessful = false;
+  //phân trang
+  currentPage: number = 1; 
+  pageSize: number = 8; 
+  paginatedBooks: any[] = []; 
+  totalPages: number = 1; 
+
+  loadBooks(): void {
+    this.bookService.getBooks().subscribe({
+      next: (data) => {
+        console.log('Dữ liệu từ API:', data);
+        this.books = data;
+        this.totalPages = Math.ceil(this.books.length / this.pageSize);
+        this.updatePagination();
+      },
+      error: (err) => {
+        console.error('Lỗi khi gọi API:', err);
+      }
+    });
+  }
+  
+  updatePagination(): void {
+    const startIndex = (this.currentPage - 1) * this.pageSize;
+    const endIndex = startIndex + this.pageSize;
+    this.paginatedBooks = this.books.slice(startIndex, endIndex);
+  }
+  
+  goToPage(page: number): void {
+    if (page < 1 || page > this.totalPages) return;
+  
+    this.currentPage = page;
+    this.updatePagination();
   }
 }

@@ -39,3 +39,10 @@ button.btn {
   background-color: #6c757d;
   border-color: #6c757d;
 }
+
+.pagination {
+  margin-top: 20px;
+}
+.pagination .btn {
+  min-width: 100px; 
+}

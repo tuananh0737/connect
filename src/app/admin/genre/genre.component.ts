@@ -29,14 +29,7 @@ export class GenreComponent implements OnInit {
   constructor(private http: HttpClient) {}
   
   ngOnInit(): void {
-    this.http.get<Genre[]>('/api/public/find-all-genres').subscribe({
-      next: (data) => {
-        this.genres = data;
-      },
-      error: (err) => {
-        console.error('Lỗi khi gọi API:', err);
-      }
-    });
+    this.loadGenres();
  }
 
  performSearch(): void {
@@ -149,4 +142,37 @@ export class GenreComponent implements OnInit {
     this.deleteSuccessful = false;
     this.updateSuccessful = false;
   }
+
+   // phân trang
+   currentPage: number = 1; 
+   pageSize: number = 10; 
+   paginatedGenres: Genre[] = []; 
+   totalPages: number = 1; 
+ 
+   loadGenres(): void {
+     const url = '/api/public/find-all-genres';
+ 
+     this.http.get<Genre[]>(url).subscribe({
+       next: (data) => {
+         this.genres = data;
+         this.totalPages = Math.ceil(this.genres.length / this.pageSize); 
+         this.updatePagination();
+       },
+       error: (err) => {
+         console.error('Lỗi khi gọi API:', err);
+       },
+     });
+   }
+ 
+   updatePagination(): void {
+     const startIndex = (this.currentPage - 1) * this.pageSize;
+     const endIndex = startIndex + this.pageSize;
+     this.paginatedGenres = this.genres.slice(startIndex, endIndex); 
+   }
+ 
+   goToPage(page: number): void {
+     if (page < 1 || page > this.totalPages) return; 
+     this.currentPage = page;
+     this.updatePagination();
+   }
 }
