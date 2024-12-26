@@ -3,7 +3,7 @@
 }
 
 button.btn {
-  margin-right: 5px ;
+  margin-right: 5px;
 }
 
 .modal-header {
@@ -14,17 +14,6 @@ button.btn {
 .table th, .table td {
   text-align: center;
   vertical-align: middle;
-}
-
-.table tbody tr:hover {
-  background-color: #f1f1f1;
-}
-
-
-.add-genre-btn {
-  margin-top: 15px;
-  padding: 10px 20px;
-  font-size: 16px;
 }
 
 .modal.d-block {
@@ -45,8 +34,9 @@ button.btn {
   border-color: #6c757d;
 }
 
-.action-buttons {
-  display: flex;
-  justify-content: center;
-  gap: 5px; 
+.pagination {
+  margin-top: 20px;
+}
+.pagination .btn {
+  min-width: 100px; 
 }

@@ -27,3 +27,13 @@
 .card-header {
   background-color: #2fb746 !important;
 }
+
+.highlight {
+  border: 2px solid #ffc107;
+  background-color: #fff8e1;
+  transition: background-color 0.5s ease;
+}
+
+.highlight:hover {
+  background-color: #ffeb3b;
+}

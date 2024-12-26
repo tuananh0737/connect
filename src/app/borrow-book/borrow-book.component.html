@@ -9,13 +9,13 @@
         </div>
   
         <div *ngIf="borrowBooks && borrowBooks.length > 0" class="list-group">
-          <div *ngFor="let borrowBook of borrowBooks" class="list-group-item">
+          <div *ngFor="let borrowBook of borrowBooks" [id]="'book-' + borrowBook.book.id" class="list-group-item">
             <h5 class="mb-2">{{ borrowBook.book.name }}</h5>
             <p class="mb-1"><strong>Tác giả:</strong> {{ borrowBook.book.author.fullname }}</p>
             <p class="mb-1"><strong>Thể loại:</strong> {{ borrowBook.book.genres.name.trim() }}</p>
             <p class="mb-1"><strong>Năm xuất bản:</strong> {{ borrowBook.book.publishYear }}</p>
             <p class="mb-1"><strong>Thời gian mượn:</strong> {{ borrowBook.createdDate }}</p>
-          </div>
+          </div>          
         </div>
   
         <p *ngIf="borrowBooks && borrowBooks.length === 0" class="text-center mt-3">Danh sách mượn trống.</p>

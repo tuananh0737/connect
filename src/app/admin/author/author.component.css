@@ -16,12 +16,6 @@ button.btn {
   vertical-align: middle;
 }
 
-.add-author-btn {
-  margin-top: 15px;
-  padding: 10px 20px;
-  font-size: 16px;
-}
-
 .modal.d-block {
   background-color: rgba(0, 0, 0, 0.5);
 }
