@@ -1,23 +1,21 @@
 <div class="container py-4">
     <div class="container py-4">
         <h1 class="mb-4">Danh sách người dùng</h1>
-
+        
         <div class="mb-4">
-          <div class="input-group">
-            <input type="text" id="searchInput" class="form-control" placeholder="Search by genre.name" [(ngModel)]="param">
-            <button class="btn btn-primary" (click)="searchUser()">Tìm kiếm</button>
+            <div class="input-group">
+              <input type="text" id="searchInput" class="form-control" placeholder="Search by genre.name" [(ngModel)]="param">
+              <button class="btn btn-primary" (click)="searchUser()">Tìm kiếm</button>
+            </div>
           </div>
-        </div>
-
+        
         <table class="table table-bordered table-striped">
           <thead class="table-light">
             <tr>
               <th>ID</th>
               <th>Username</th>
               <th>Fullname</th>
-              <th>Trạng thái hoạt động</th>
               <th>Số điện thoại</th>
-              <th>Sách đã mượn</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -26,47 +24,16 @@
               <td>{{ user.id }}</td>
               <td>{{ user.username }}</td>
               <td>{{ user.fullname }}</td>
-              <td>{{ user.actived ? 'Hoạt động' : 'Không hoạt động' }}</td>
               <td>{{ user.phone }}</td>
-              <td>
-                <button class="btn btn-info btn-sm" (click)="showBorrowBook(user.id)">View</button>
-              </td>
               <td class="action">
                 <button class="btn btn-sm btn-outline-primary" (click)="openEditUserForm(user)">
                   <img src="assets/edit.png" alt="Edit" style="width: 20px;">
                 </button>
-                <button
-          class="btn btn-sm btn-outline-primary"
-          (click)="openSendNotificationForm(user)">
-          <img src="assets/mail.png" alt="SendNotification" style="width: 20px;">
-        </button>
-
               </td>
             </tr>
           </tbody>          
         </table>
       </div>
-
-      <div *ngIf="sendNotification" class="overlay-content d-flex justify-content-center align-items-center">
-        <div class="card">
-          <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
-            <h5 class="mb-0">Gửi thông báo</h5>
-            <button type="button" class="btn-close btn-close-white" aria-label="Close" (click)="closeOverlay()"></button>
-          </div>
-          <div class="card-body">
-            <div class="mb-3">
-              <label for="notificationContent" class="form-label">Nội dung thông báo</label>
-              <textarea id="notificationContent" class="form-control" rows="4" [(ngModel)]="notificationContent"></textarea>
-            </div>
-            <div class="d-flex justify-content-end">
-              <button class="btn btn-secondary me-2" (click)="closeOverlay()">Hủy</button>
-              <button class="btn btn-primary" (click)="sendNotificationToUser()">Gửi</button>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      
 
       <div class="pagination d-flex justify-content-center align-items-center mt-3">
         <button 
@@ -86,42 +53,6 @@
         </button>
       </div>
       
-
-      <div *ngIf="showModal" class="modal fade show" tabindex="-1" style="display: block;">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title">Danh sách sách đã mượn</h5>
-              <button type="button" class="btn-close" (click)="closeModal()"></button>
-            </div>
-            <div class="modal-body">
-              <table class="table table-bordered">
-                <thead class="table-light">
-                  <tr>
-                    <th>Tên sách</th>
-                    <th>Tác giả</th>
-                    <th>Thể loại</th>
-                    <th>Năm phát hành</th>
-                    <th>Thời gian mượn</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let book of borrowedBooks">
-                    <td>{{ book.bookName }}</td>
-                    <td>{{ book.authorName }}</td>
-                    <td>{{ book.genre }}</td>
-                    <td>{{ book.publishYear }}</td>
-                    <td>{{ book.borrowedDate }}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" (click)="closeModal()">Đóng</button>
-            </div>
-          </div>
-        </div>
-      </div>
       
     <div *ngIf="showEditForm" class="modal fade show" tabindex="-1" style="display: block;">
       <div class="modal-dialog">
@@ -150,14 +81,13 @@
                   <option [value]="'ROLE_USER'">Người dùng</option>
                   <option [value]="'ROLE_LIBRARIAN'">Thủ thư</option>
                 </select>
-              </div>
-              
+              </div>    
               <div class="form-check form-switch">
                 <input class="form-check-input" type="checkbox" id="statusToggle" [(ngModel)]="selectedUser!.actived" name="actived">
                 <label class="form-check-label" for="statusToggle">
                   {{ selectedUser?.actived ? 'Hoạt động' : 'Không hoạt động' }}
                 </label>
-              </div>              
+              </div>            
               <div *ngIf="errorMessage" class="alert alert-danger">
                 {{ errorMessage }}
               </div>

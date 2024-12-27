@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 
 
@@ -10,6 +10,7 @@ interface User {
   phone: string;
   borrowBook: string;
   idCard: string;
+  role: string;
 }
 
 interface BorrowedBook {
@@ -73,6 +74,8 @@ export class UserComponent implements OnInit {
   openEditUserForm(user: User): void {
     this.selectedUser = { ...user };
     this.showEditForm = true;
+    console.log('data: ',user);
+    
   }
   
   errorMessage: string | null = null; 
@@ -149,7 +152,6 @@ export class UserComponent implements OnInit {
   paginatedUsers: User[] = []; 
   totalPages: number = 1; 
 
-  // Lấy toàn bộ dữ liệu và thiết lập phân trang
   loadUsers(): void {
     const token = localStorage.getItem('authToken');
     const headers = { Authorization: `Bearer ${token}` };
@@ -167,18 +169,65 @@ export class UserComponent implements OnInit {
     });
   }
 
-  // Cập nhật danh sách người dùng hiển thị theo trang
   updatePagination(): void {
     const startIndex = (this.currentPage - 1) * this.pageSize;
     const endIndex = startIndex + this.pageSize;
     this.paginatedUsers = this.users.slice(startIndex, endIndex); 
   }
 
-  // Thay đổi trang
+  
   goToPage(page: number): void {
     if (page < 1 || page > this.totalPages) return; 
     this.currentPage = page;
     this.updatePagination();
+  }
+
+  //gui thong bao cho user
+  sendNotification: boolean = false;
+  notificationContent: string = '';
+
+  openSendNotificationForm(user: User): void {
+    this.selectedUser = { ...user };
+    this.sendNotification = true;
+  }
+
+  sendNotificationToUser(): void {
+    if (!this.selectedUser) {
+      alert('Không có người dùng được chọn.');
+      return;
+    }
+  
+    const token = localStorage.getItem('authToken');
+    if (!token) {
+      alert('Bạn cần đăng nhập để thực hiện chức năng này.');
+      return;
+    }
+  
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
+  
+    const url = `/api/admin/send-notification?userId=${this.selectedUser.id}&content=${encodeURIComponent(this.notificationContent)}`;
+  
+    this.http.post(url, {}, { headers, responseType: 'text' }).subscribe({
+      next: (response: string) => {
+        alert(response);
+        this.closeOverlay();
+      },
+      error: (err) => {
+        console.error('Lỗi khi gọi API:', err);
+        alert('Không thể gửi thông báo. Vui lòng thử lại.');
+      },
+    });
+  }
+  
+  
+  
+
+  closeOverlay(): void {
+    this.sendNotification = false;
+    this.notificationContent = '';
+    this.selectedUser = null;
   }
 
 }

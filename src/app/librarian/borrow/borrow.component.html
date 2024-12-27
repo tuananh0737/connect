@@ -1,0 +1,134 @@
+<div class="container mt-5">
+    <h2 class="text-center mb-5">Thông tin mượn sách</h2>
+  
+    <!-- Button mở modal chọn người dùng -->
+    <div class="row justify-content-center">
+      <div class="col-lg-6 col-md-8 text-center">
+        <button class="btn btn-primary mb-4" (click)="openUserSelector()">
+          Chọn người dùng
+        </button>
+      </div>
+    </div>
+  
+    <!-- Modal Chọn Người Dùng -->
+    <div *ngIf="isUserSelectorVisible" class="modal fade show d-block" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Chọn người dùng</h5>
+            <button type="button" class="btn-close" (click)="closeUserSelector()"></button>
+          </div>
+          <div class="modal-body">
+            <!-- Input tìm kiếm -->
+            <div class="input-group mb-3">
+              <input
+                type="text"
+                class="form-control"
+                [(ngModel)]="searchParam"
+                placeholder="Tìm kiếm người dùng (Tên, ID Card, SĐT)"
+              />
+              <button class="btn btn-primary" (click)="searchUsers()">Tìm kiếm</button>
+            </div>
+  
+            <!-- Hiển thị danh sách người dùng sau khi tìm kiếm -->
+            <div *ngIf="users.length > 0" class="list-group">
+              <button
+                type="button"
+                class="list-group-item list-group-item-action"
+                *ngFor="let user of users"
+                (click)="selectUser(user)"
+              >
+                {{ user.fullname }} - {{ user.idCard }} - {{ user.phone }}
+              </button>
+            </div>
+  
+            <!-- Thông báo không có người dùng -->
+            <div *ngIf="users.length === 0">
+              <p class="text-center text-muted">Không tìm thấy người dùng.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Thông tin người dùng được chọn -->
+    <div class="row justify-content-center" *ngIf="selectedUserId">
+      <div class="col-lg-6 col-md-8 text-center">
+        <p class="mb-3">
+          <strong>Người dùng:</strong> {{ selectedUserName }}
+        </p>
+        <button class="btn btn-success" (click)="fetchBorrowBooks()">Tìm kiếm sách đã mượn</button>
+      </div>
+    </div>
+  
+    <!-- Kết quả mượn sách -->
+    <div *ngIf="borrowBooks.length > 0" class="row mt-4">
+      <div class="col-12">
+        <h3 class="text-center mb-4">Kết quả</h3>
+        <div class="table-responsive">
+          <table class="table table-bordered table-hover">
+            <thead class="table-light">
+              <tr>
+                <th>#</th>
+                <th>Tên sách</th>
+                <th>Ngày mượn</th>
+                <th>Ngày phải trả</th>
+                <th>Ngày trả (nếu có)</th>
+                <th>Hành động</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let book of borrowBooks; index as i">
+                <td>{{ i + 1 }}</td>
+                <td>{{ book.book.name }}</td>
+                <td>{{ book.createdDate }}</td>
+                <td>{{ book.returnDueDate }}</td>
+                <td>{{ book.actualReturnDate || 'Chưa trả' }}</td>
+                <td>
+                  <button
+                    class="btn btn-success btn-sm"
+                    [disabled]="book.returned"
+                    (click)="openConfirmationDialog(book.id, book.book.name)"
+                  >
+                    {{ book.returned ? 'Đã trả' : 'Trả sách' }}
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Không có dữ liệu -->
+    <div *ngIf="borrowBooks.length === 0 && selectedUserId" class="row">
+      <div class="col-12 text-center mt-4">
+        <p class="text-muted fst-italic">Không có dữ liệu.</p>
+      </div>
+    </div>
+  
+    <!-- Modal xác nhận trả sách -->
+    <div *ngIf="isConfirmationVisible" class="modal fade show d-block">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Xác nhận trả sách</h5>
+            <button type="button" class="btn-close" (click)="closeConfirmationDialog()"></button>
+          </div>
+          <div class="modal-body">
+            <p>Bạn có chắc chắn muốn trả sách "<strong>{{ bookNameToReturn }}</strong>"?</p>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" (click)="closeConfirmationDialog()">Hủy</button>
+            <button class="btn btn-danger" (click)="confirmReturnBook()">Đồng ý</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Thông báo trả sách thành công -->
+    <div *ngIf="isSuccessMessageVisible" class="alert alert-success mt-4 text-center shadow-sm">
+      Sách "<strong>{{ bookNameToReturn }}</strong>" đã được trả thành công!
+    </div>
+  </div>
+  

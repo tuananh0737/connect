@@ -1,0 +1,47 @@
+.modal-content {
+    border-radius: 8px;
+  }
+  
+  button.btn {
+    margin-right: 5px;
+  }
+  
+  .modal-header {
+    background-color: #ffffff;
+    color: rgb(0, 0, 0);
+  }
+  
+  .table th, .table td {
+    text-align: center;
+    vertical-align: middle;
+  }
+  
+  .add-author-btn {
+    margin-top: 15px;
+    padding: 10px 20px;
+    font-size: 16px;
+  }
+  
+  .modal.d-block {
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+  
+  .overlay-content {
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .overlay-content button {
+    margin-top: 10px;
+  }
+  
+  .btn-secondary {
+    background-color: #6c757d;
+    border-color: #6c757d;
+  }
+  
+  .form-check-input:checked {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+  }
+  

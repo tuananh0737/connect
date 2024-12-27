@@ -21,6 +21,8 @@ import { DecodeQrComponent } from './decode-qr/decode-qr.component';
 import { CommentComponent } from './comment/comment.component';
 import { DeCodeQRComponent } from './librarian/de-code-qr/de-code-qr.component';
 import { BookLibrarianComponent } from './librarian/book/book.component';
+import { LibrarianComponent } from './admin/librarian/librarian.component';
+import { BorrowComponent } from './librarian/borrow/borrow.component';
 
 
 @NgModule({
@@ -41,7 +43,9 @@ import { BookLibrarianComponent } from './librarian/book/book.component';
     DecodeQrComponent,
     CommentComponent,
     DeCodeQRComponent,
-    BookLibrarianComponent
+    BookLibrarianComponent,
+    LibrarianComponent,
+    BorrowComponent
     
   ],
   imports: [

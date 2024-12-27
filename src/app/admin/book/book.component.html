@@ -1,12 +1,7 @@
 <div class="container">
   <h1 class="my-4">Tìm kiếm</h1>
   <div class="input-group mb-4">
-    <input 
-      type="text" 
-      id="searchInput" 
-      class="form-control" 
-      placeholder="Search by book title, author, or genres" 
-      [(ngModel)]="searchQuery">
+    <input type="text" id="searchInput" class="form-control" placeholder="Search by book title, author, or genres"  [(ngModel)]="searchQuery">
     <button class="btn btn-primary" (click)="performSearch()">Search</button>
   </div>
 
