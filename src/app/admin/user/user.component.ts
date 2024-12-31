@@ -45,7 +45,7 @@ export class UserComponent implements OnInit {
   showBorrowBook(userId: number): void {
     const token = localStorage.getItem('authToken');
     const headers = { Authorization: `Bearer ${token}` };
-    const url = `/api/admin/find-borrowBook?userId=${userId}`;
+    const url = `/api/system/find-borrowBook?userId=${userId}`;
 
     this.http.get<any[]>(url, { headers }).subscribe({
       next: (data) => {
@@ -90,7 +90,7 @@ export class UserComponent implements OnInit {
     }
   
     const headers = { Authorization: `Bearer ${token}` };
-    const url = '/api/admin/update-user';
+    const url = '/api/system/update-user';
   
     this.http.post<User>(url, this.selectedUser, { headers }).subscribe({
       next: (data) => {
@@ -124,7 +124,7 @@ export class UserComponent implements OnInit {
   searchUser(): void {
     const token = localStorage.getItem('authToken');
     const headers = { Authorization: `Bearer ${token}` };
-    const url = '/api/admin/search-user';
+    const url = '/api/system/search-user';
   
     const payload = { param: this.param }; 
   

@@ -10,7 +10,9 @@ button.btn {
   background-color: #007bff;
   color: white;
 }
-
+.modal-title {
+  font-size: 18px;
+}
 .table th, .table td {
   text-align: center;
   vertical-align: middle;

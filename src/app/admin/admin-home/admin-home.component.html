@@ -1,1 +1,123 @@
-<p>QUẢN LÝ THƯ VIỆN</p>
+<div class="container mt-5">
+    <div class="text-center mb-4">
+      <h1 class="display-6">Thống kê thư viện</h1>
+    </div>
+  
+    <div class="row text-center mb-4">
+      <div class="col-md-3">
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title">Sách khả dụng</h5>
+            <p class="display-5 text-primary">{{ statistics?.totalAvailableBooks }}</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title">Sách đang mượn</h5>
+            <p class="display-5 text-warning">{{ statistics?.booksCurrentlyBorrowed }}</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title">Thành viên</h5>
+            <p class="display-5 text-success">{{ statistics?.totalRegisteredUsers }}</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title">Sách đã mượn</h5>
+            <p class="display-5 text-danger">{{ statistics?.totalBorrowedBooks }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <div class="row">
+      <div class="col-md-6">
+        <div class="card shadow-sm">
+          <div class="card-header bg-primary text-white">
+            <h5>Trạng thái mượn</h5>
+          </div>
+          <!-- <div class="card-body">
+            <canvas id="borrowStatusChart" width="300" height="300"></canvas>
+          </div> -->
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">Trả đúng hạn: {{ statistics?.returnedOnTime }}</li>
+            <li class="list-group-item">Trả quá hạn: {{ statistics?.returnedLate }}</li>
+            <li class="list-group-item">Chưa trả: {{ statistics?.notReturned }}</li>
+          </ul>
+        </div>
+      </div>
+  
+      <div class="col-md-6">
+        <div class="card shadow-sm">
+          <div class="card-header bg-success text-white">
+            <h5>Sách mượn nhiều nhất</h5>
+          </div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item" *ngFor="let book of statistics?.topBooks">
+              {{ book[0] }} - <span class="badge bg-primary">{{ book[1] }}</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Người dùng mượn nhiều -->
+    <div class="mt-4">
+      <div class="card shadow-sm">
+        <div class="card-header bg-info text-white">
+          <h5>Người dùng mượn nhiều sách nhất</h5>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item" *ngFor="let user of statistics?.topUsers">
+            {{ user[0] }} - <span class="badge bg-warning">{{ user[1] }}</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="mt-4">
+    <div class="card shadow-sm">
+      <div class="card-header bg-secondary text-white">
+        <h5>Sách mượn theo tháng</h5>
+      </div>
+      <div class="card-body">
+        <!-- Lựa chọn tháng và năm -->
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label for="monthSelect" class="form-label">Tháng</label>
+            <select id="monthSelect" class="form-select" [(ngModel)]="selectedMonth" (change)="onMonthYearChange()">
+              <option *ngFor="let month of [1,2,3,4,5,6,7,8,9,10,11,12]" [value]="month">
+                {{ month }}
+              </option>
+            </select>
+          </div>
+          <div class="col-md-6">
+            <label for="yearSelect" class="form-label">Năm</label>
+            <select id="yearSelect" class="form-select" [(ngModel)]="selectedYear" (change)="onMonthYearChange()">
+              <option *ngFor="let year of [2023, 2024, 2025]" [value]="year">
+                {{ year }}
+              </option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Thống kê theo tháng -->
+        <div *ngIf="monthlyStatistics">
+          <p>{{ monthlyStatistics }}</p>
+        </div>
+        <div *ngIf="!monthlyStatistics">
+          <p>Không có dữ liệu cho tháng đã chọn.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+  

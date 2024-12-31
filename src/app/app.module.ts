@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { ZXingScannerComponent, ZXingScannerModule } from '@zxing/ngx-scanner';
+import { ZXingScannerComponent } from '@zxing/ngx-scanner';
+import { ZXingScannerModule } from '@zxing/ngx-scanner';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BookListComponent } from './book-list/book-list.component';
@@ -23,6 +24,10 @@ import { DeCodeQRComponent } from './librarian/de-code-qr/de-code-qr.component';
 import { BookLibrarianComponent } from './librarian/book/book.component';
 import { LibrarianComponent } from './admin/librarian/librarian.component';
 import { BorrowComponent } from './librarian/borrow/borrow.component';
+// import { MatAutocompleteModule } from '@angular/material/autocomplete';
+// import { MatFormFieldModule } from '@angular/material/form-field';
+// import { MatInputModule } from '@angular/material/input';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 @NgModule({
@@ -54,8 +59,11 @@ import { BorrowComponent } from './librarian/borrow/borrow.component';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    ZXingScannerModule
-
+    ZXingScannerModule,
+    // MatAutocompleteModule,
+    // MatFormFieldModule,
+    // MatInputModule,
+    BrowserAnimationsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

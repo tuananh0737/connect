@@ -40,7 +40,7 @@ export class BorrowComponent {
       'Content-Type': 'application/json'
     });
 
-    this.http.post('/api/librarian/search-user', { param: this.searchParam }, { headers })
+    this.http.post('/api/system/search-user', { param: this.searchParam }, { headers })
       .subscribe(
         (response: any) => {
           this.users = response || [];
@@ -66,7 +66,7 @@ export class BorrowComponent {
       Authorization: `Bearer ${token}`
     });
 
-    this.http.get(`/api/librarian/find-borrowBook?userId=${this.selectedUserId}`, { headers })
+    this.http.get(`/api/system/find-borrowBook?userId=${this.selectedUserId}`, { headers })
       .subscribe(
         (response: any) => {
           this.borrowBooks = response || [];
@@ -98,7 +98,7 @@ export class BorrowComponent {
         'Content-Type': 'application/json'
       });
 
-      this.http.post(`/api/librarian/return-book?borrowBookId=${this.bookIdToReturn}`, {}, { headers, responseType: 'text' })
+      this.http.post(`/api/system/return-book?borrowBookId=${this.bookIdToReturn}`, {}, { headers, responseType: 'text' })
         .subscribe(
           () => {
             this.isSuccessMessageVisible = true;

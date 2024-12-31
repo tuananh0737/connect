@@ -92,7 +92,7 @@ export class BookLibrarianComponent implements OnInit {
     }
 
     const headers = { Authorization: `Bearer ${token}` };
-    const url = `/api/librarian/search-user`;
+    const url = `/api/system/search-user`;
 
     this.http
       .post<{ id: number; fullname: string; idCard: string; phone: string }[]>(
@@ -130,7 +130,7 @@ export class BookLibrarianComponent implements OnInit {
     }
 
     const headers = { Authorization: `Bearer ${token}` };
-    const url = `/api/librarian/add-borrowBook`;
+    const url = `/api/system/add-borrowBook`;
 
     const borrowData = {
       user: { id: this.selectedUserId },

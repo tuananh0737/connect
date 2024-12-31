@@ -57,6 +57,7 @@ export class BookComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadBooks();
+    this.loadAuthorsAndGenres();
   }
 
 
@@ -81,7 +82,7 @@ export class BookComponent implements OnInit {
     }
 
     const headers = { Authorization: `Bearer ${token}` };
-    const url = `/api/admin/search-user`;
+    const url = `/api/system/search-user`;
 
     this.http
       .post<{ id: number; fullname: string; idCard: string; phone: string }[]>(
@@ -119,7 +120,7 @@ export class BookComponent implements OnInit {
     }
 
     const headers = { Authorization: `Bearer ${token}` };
-    const url = `/api/admin/add-borrowBook`;
+    const url = `/api/system/add-borrowBook`;
 
     const borrowData = {
       user: { id: this.selectedUserId },
@@ -206,8 +207,8 @@ export class BookComponent implements OnInit {
   private validateBook(book: Book): boolean {
     return (
       !!book.name &&
-      !!book.author.fullname &&
-      !!book.genres.name &&
+      book.author.id > 0 &&
+      book.genres.id > 0 &&
       book.numberPage > 0 &&
       book.publishYear > 0 &&
       !!book.description &&
@@ -225,7 +226,13 @@ export class BookComponent implements OnInit {
     const headers = { Authorization: `Bearer ${token}` };
     const url = '/api/admin/add-update-book';
   
-    this.http.post<Book>(url, this.newBook, { headers }).subscribe({
+    const bookData = {
+      ...this.newBook,
+      author: { id: this.newBook.author.id },
+      genres: { id: this.newBook.genres.id },
+    };
+  
+    this.http.post<Book>(url, bookData, { headers }).subscribe({
       next: (response) => {
         this.books.push(response);
         alert(`Sách "${response.name}" đã được thêm thành công!`);
@@ -237,6 +244,7 @@ export class BookComponent implements OnInit {
       },
     });
   }
+  
   
   openEditBookForm(book: Book): void {
     this.newBook = { ...book };
@@ -360,4 +368,39 @@ export class BookComponent implements OnInit {
     this.currentPage = page;
     this.updatePagination();
   }
+
+  //lay id tacgia va the loai
+  authors: { id: number; fullname: string }[] = [];
+genres: { id: number; name: string }[] = [];
+
+// Tải dữ liệu cho dropdown từ API
+loadAuthorsAndGenres(): void {
+  const token = localStorage.getItem('authToken');
+  if (!token) {
+    alert('Bạn chưa đăng nhập!');
+    return;
+  }
+
+  const headers = { Authorization: `Bearer ${token}` };
+
+  this.http.post<{ id: number; fullname: string }[]>('/api/public/search-author', { headers })
+    .subscribe({
+      next: (data) => {
+        this.authors = data;
+      },
+      error: (err) => {
+        console.error('Lỗi khi tải danh sách tác giả:', err);
+      }
+    });
+
+  this.http.post<{ id: number; name: string }[]>('/api/public/search-genre', { headers })
+    .subscribe({
+      next: (data) => {
+        this.genres = data;
+      },
+      error: (err) => {
+        console.error('Lỗi khi tải danh sách thể loại:', err);
+      }
+    });
+}
 }

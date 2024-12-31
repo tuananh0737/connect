@@ -31,6 +31,10 @@ button.btn {
   background-color: rgba(0, 0, 0, 0.5);
 }
 
+.modal-title {
+  font-size: 18px;
+}
+
 .overlay-content {
   text-align: center;
   padding: 20px;

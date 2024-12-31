@@ -42,6 +42,8 @@
       </tr>
     </tbody>
   </table>
+  <button class="btn btn-success mb-4" (click)="openAddBookForm()">Add Book</button>
+
 </div>
 
 <div class="pagination d-flex justify-content-center align-items-center mt-3">
@@ -76,6 +78,7 @@
     </div>
   </div>
 
+
   <div *ngIf="deleteSuccessful" class="modal fade show d-block" tabindex="-1">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -89,7 +92,7 @@
     </div>
   </div>
 
-  <button class="btn btn-success mb-4" (click)="openAddBookForm()">Add Book</button>
+  
 
   <div class="modal fade show d-block" *ngIf="selectedBook">
     <div class="modal-dialog">
@@ -166,15 +169,25 @@
             <div class="mb-3">
               <label class="form-label">Name:</label>
               <input type="text" class="form-control" [(ngModel)]="newBook.name" name="name" required />
-            </div>
-            <div class="mb-3">
-              <label class="form-label">Author:</label>
-              <input type="text" class="form-control" [(ngModel)]="newBook.author.fullname" name="author" required />
-            </div>
-            <div class="mb-3">
-              <label class="form-label">Genre:</label>
-              <input type="text" class="form-control" [(ngModel)]="newBook.genres.name" name="genre" required />
-            </div>
+            </div>                
+                <div class="mb-3">
+                  <label class="form-label">Author:</label>
+                  <select class="form-select" [(ngModel)]="newBook.author.id" name="author" required>
+                    <option *ngFor="let author of authors" [value]="author.id">
+                      {{ author.fullname }}
+                    </option>
+                  </select>
+                </div>
+                
+                <div class="mb-3">
+                  <label class="form-label">Genre:</label>
+                  <select class="form-select" [(ngModel)]="newBook.genres.id" name="genre" required>
+                    <option *ngFor="let genre of genres" [value]="genre.id">
+                      {{ genre.name }}
+                    </option>
+                  </select>
+                </div>
+                
             <div class="mb-3">
               <label class="form-label">Pages:</label>
               <input type="number" class="form-control" [(ngModel)]="newBook.numberPage" name="pages" required />

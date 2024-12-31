@@ -43,16 +43,14 @@ export class AppComponent implements OnInit {
 
   fetchNotifications(token: string): void {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    if(this.userRole === 'ROLE_USER') {
     this.http.get<any[]>('/api/user/notifications', { headers }).subscribe({
       next: (data) => {
         this.notifications = data;
       },
       error: () => {
-          this.notifications = [];
+        this.notifications = [];
       }
     });
-  }
   }
 
   toggleNotificationMenu(): void {
