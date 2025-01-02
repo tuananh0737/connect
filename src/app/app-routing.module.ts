@@ -12,12 +12,12 @@ import { GenreComponent } from './admin/genre/genre.component';
 import { AdminHomeComponent } from './admin/admin-home/admin-home.component';
 import { UserComponent } from './admin/user/user.component';
 import { BorrowBookComponent } from './borrow-book/borrow-book.component';
-import { DecodeQrComponent } from './decode-qr/decode-qr.component';
 import { CommentComponent } from './comment/comment.component';
 import { DeCodeQRComponent } from './librarian/de-code-qr/de-code-qr.component';
 import { BookLibrarianComponent } from './librarian/book/book.component';
 import { LibrarianComponent } from './admin/librarian/librarian.component';
 import { BorrowComponent } from './librarian/borrow/borrow.component';
+import { EbookComponent } from './ebook/ebook.component';
 
 const routes: Routes = [
   {
@@ -47,6 +47,10 @@ const routes: Routes = [
   {
     path: 'user-info',
     component: UserInfoComponent,
+  },
+  {
+    path: 'ebook',
+    component: EbookComponent,
   },
   {
     path: 'comment',
@@ -79,10 +83,6 @@ const routes: Routes = [
   {
     path: 'admin/librarian',
     component: LibrarianComponent,
-  },
-  {
-    path: 'decodeQr',
-    component: DecodeQrComponent,
   },
   {
     path: 'librarian/deCodeQR',

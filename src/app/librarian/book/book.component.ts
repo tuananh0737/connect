@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BookService } from '../services/book.service';
 import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
+import { Router,ActivatedRoute  } from '@angular/router';
 
 interface Book {
   id: number;
@@ -55,7 +55,8 @@ export class BookLibrarianComponent implements OnInit {
   constructor(
     private bookService: BookService,
     private http: HttpClient,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
@@ -63,10 +64,20 @@ export class BookLibrarianComponent implements OnInit {
       next: (data) => {
         this.books = data;
         this.originalBooks = [...data];
+  
+        this.route.queryParams.subscribe((params) => {
+          const bookId = params['bookId'];
+          if (bookId) {
+            const selectedBook = this.books.find((book) => book.id === +bookId);
+            if (selectedBook) {
+              this.showDetails(selectedBook); 
+            }
+          }
+        });
       },
       error: (err) => {
         console.error('Lỗi khi gọi API:', err);
-      }
+      },
     });
   }
 

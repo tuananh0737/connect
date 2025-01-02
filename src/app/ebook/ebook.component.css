@@ -1,0 +1,12 @@
+.card {
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  
+  .card-img-top {
+    height: 250px;
+    object-fit: cover;
+  }
+  .search-container {
+    margin-top: 20px; 
+  }

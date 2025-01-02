@@ -18,7 +18,6 @@ import { GenreComponent } from './admin/genre/genre.component';
 import { AdminHomeComponent } from './admin/admin-home/admin-home.component';
 import { UserComponent } from './admin/user/user.component';
 import { BorrowBookComponent } from './borrow-book/borrow-book.component';
-import { DecodeQrComponent } from './decode-qr/decode-qr.component';
 import { CommentComponent } from './comment/comment.component';
 import { DeCodeQRComponent } from './librarian/de-code-qr/de-code-qr.component';
 import { BookLibrarianComponent } from './librarian/book/book.component';
@@ -28,6 +27,7 @@ import { BorrowComponent } from './librarian/borrow/borrow.component';
 // import { MatFormFieldModule } from '@angular/material/form-field';
 // import { MatInputModule } from '@angular/material/input';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { EbookComponent } from './ebook/ebook.component';
 
 
 @NgModule({
@@ -45,12 +45,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     AdminHomeComponent,
     UserComponent,
     BorrowBookComponent,
-    DecodeQrComponent,
     CommentComponent,
     DeCodeQRComponent,
     BookLibrarianComponent,
     LibrarianComponent,
-    BorrowComponent
+    BorrowComponent,
+    EbookComponent
     
   ],
   imports: [

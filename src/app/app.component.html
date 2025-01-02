@@ -1,3 +1,4 @@
+<div>
 <nav *ngIf="userRole === 'ROLE_USER'" class="navbar navbar-expand-lg navbar-dark bg-success">
 	<div class="container-fluid">
 	  <a class="navbar-brand" routerLink="/home">Bookreads</a>
@@ -179,5 +180,9 @@
 		</div>
 	  </div>
 	</nav>
+</div>
 
-<router-outlet></router-outlet>
+<div class="content">
+	<router-outlet></router-outlet>
+</div>
+	  

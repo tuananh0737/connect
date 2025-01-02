@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DecodeQrComponent } from './decode-qr.component';
+import { EbookComponent } from './ebook.component';
 
-describe('DecodeQrComponent', () => {
-  let component: DecodeQrComponent;
-  let fixture: ComponentFixture<DecodeQrComponent>;
+describe('EbookComponent', () => {
+  let component: EbookComponent;
+  let fixture: ComponentFixture<EbookComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [DecodeQrComponent]
+      declarations: [EbookComponent]
     });
-    fixture = TestBed.createComponent(DecodeQrComponent);
+    fixture = TestBed.createComponent(EbookComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

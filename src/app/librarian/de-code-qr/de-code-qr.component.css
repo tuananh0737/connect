@@ -1,68 +1,170 @@
 .container {
-    max-width: 800px;
-    margin: 0 auto;
+  max-width: 900px;
+  margin: auto;
+  padding: 20px;
+}
+
+h2 {
+  font-family: 'Arial', sans-serif;
+  font-weight: bold;
+  text-transform: uppercase;
+  position: relative;
+  text-align: center;
+  color: #007bff;
+}
+
+h2::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(90deg, #007bff, #00d4ff, #007bff);
+  animation: shine 2s linear infinite;
+}
+
+@keyframes shine {
+  0% {
+    background-position: 0% 50%;
   }
-  
-  h2 {
-    font-weight: bold;
-    color: #333;
+  100% {
+    background-position: 100% 50%;
   }
-  
-  .scanner-frame {
-    border: 2px solid #ddd;
-    border-radius: 10px;
+}
+
+
+h4 {
+  font-family: 'Arial', sans-serif;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+.scanner-frame {
+  border: 2px dashed #007bff;
+  border-radius: 10px;
+  padding: 10px;
+  background-color: #f8f9fa;
+  position: relative;
+  overflow: hidden;
+}
+
+.scanner-frame::before {
+  content: '📷 Scanning...';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.5rem;
+  color: #6c757d;
+  z-index: 1;
+}
+
+.card-header {
+  font-size: 1.25rem;
+  text-transform: uppercase;
+  background-color: #007bff;
+  color: #fff;
+  text-align: center;
+}
+
+.card-body {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+  padding: 15px;
+}
+
+.card-body p {
+  line-height: 1.6;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.card-body strong {
+  color: #007bff;
+  font-weight: bold;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  border-color: #007bff;
+  color: #fff;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+  padding: 10px 20px;
+  border-radius: 5px;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+  border-color: #004085;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.text-danger {
+  font-weight: bold;
+  font-size: 1rem;
+  color: #dc3545;
+  text-align: center;
+}
+
+p {
+  margin-bottom: 0.5rem;
+  color: #343a40;
+}
+
+@media (max-width: 576px) {
+  .container {
     padding: 10px;
-    background: #f9f9f9;
   }
-  
-  .card {
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+
+  h2, h4 {
+    font-size: 1.2rem;
   }
-  
-  .card-title {
-    font-size: 1.5rem;
-    font-weight: bold;
+
+  .scanner-frame {
+    padding: 5px;
   }
-  
-  .card-text {
-    font-size: 1.1rem;
-    margin: 10px 0;
-  }
-  
-  p {
-    font-size: 1rem;
-    color: #555;
-  }
-  
-  strong {
-    font-weight: bold;
-    color: #333;
-  }
-  
-  .mt-4 {
-    margin-top: 1.5rem;
-  }
-  
-  .btn-primary {
-    background-color: #007bff;
-    border-color: #007bff;
-    font-size: 1rem;
-    padding: 10px 20px;
-    border-radius: 5px;
-  }
-  
-  .btn-primary:hover {
-    background-color: #0056b3;
-    border-color: #0056b3;
-  }
-  
-  .text-center {
-    text-align: center;
-  }
-  
-  .ng-template {
-    color: #ff0000; /* Optional: style for fallback content */
-  }
-  
+
+
+}
+
+.book-details-grid {
+  display: grid;
+  grid-template-columns: auto 1fr; /* Cột 1 là nhãn, cột 2 là giá trị */
+  gap: 0.5rem 1rem; /* Khoảng cách giữa các hàng và cột */
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.book-details-grid .label {
+  font-weight: bold;
+  color: #007bff;
+  text-align: right; /* Căn phải cho nhãn */
+}
+
+.book-details-grid .value {
+  color: #343a40;
+  text-align: left; /* Căn trái cho giá trị */
+}
+
+.card-body {
+  padding: 1.5rem; /* Thêm padding tổng thể */
+  background-color: #f8f9fa; /* Nền sáng */
+  border-radius: 8px; /* Bo góc */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Hiệu ứng bóng */
+}
+
+.card-header {
+  text-align: center;
+  background-color: #007bff; /* Màu xanh tiêu đề */
+  color: white;
+  font-weight: bold;
+  font-size: 1.25rem;
+  border-radius: 8px 8px 0 0; /* Bo góc chỉ trên cùng */
+}
