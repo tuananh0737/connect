@@ -14,13 +14,13 @@
     <table class="table table-bordered table-hover">
         <thead class="table-light">
             <tr>
-                <th>Name</th>
-                <th>Author</th>
-                <th>Genre</th>
-                <th>Number Page</th>
-                <th>Publish Year</th>
-                <th>Details</th>
-                <th>Quantity</th>
+                <th>Tên sách </th>
+                <th>Tác giả </th>
+                <th>Thể loại </th>
+                <th>Số trang</th>
+                <th>Năm phát hành</th>
+                <th>Chi tiết</th>
+                <th>Số lượng</th>
             </tr>
         </thead>
         <tbody>
@@ -42,21 +42,21 @@
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title">Book Details</h5>
+              <h5 class="modal-title">Chi tiết sách</h5>
               <button class="btn-close" (click)="closeForm()"></button>
             </div>
             <div class="modal-body">
-              <p><strong>Name:</strong> {{ selectedBook.name }}</p>
-              <p><strong>Author:</strong> {{ selectedBook.author.fullname }}</p>
-              <p><strong>Genre:</strong> {{ selectedBook.genres.name }}</p>
-              <p><strong>Number Page:</strong> {{ selectedBook.numberPage }}</p>
-              <p><strong>Publish Year:</strong> {{ selectedBook.publishYear }}</p>
-              <p><strong>Details:</strong> {{ selectedBook.description }}</p>
-              <p><strong>Quantity:</strong> {{ selectedBook.quantity }}</p>
+              <p><strong>Tên sách:</strong> {{ selectedBook.name }}</p>
+              <p><strong>Tác giả:</strong> {{ selectedBook.author.fullname }}</p>
+              <p><strong>Thể loại:</strong> {{ selectedBook.genres.name }}</p>
+              <p><strong>Số trang:</strong> {{ selectedBook.numberPage }}</p>
+              <p><strong>Năm phát hành:</strong> {{ selectedBook.publishYear }}</p>
+              <p><strong>Chi tiết:</strong> {{ selectedBook.description }}</p>
+              <p><strong>Số lượng:</strong> {{ selectedBook.quantity }}</p>
             </div>
             <div class="modal-footer">
-              <button class="btn btn-primary" (click)="borrow(selectedBook)">Borrow</button>
-              <button class="btn btn-secondary" (click)="closeForm()">Close</button>
+              <button class="btn btn-primary" (click)="borrow(selectedBook)">Mượn sách</button>
+              <button class="btn btn-secondary" (click)="closeForm()">Đóng</button>
             </div>
           </div>
         </div>
@@ -79,7 +79,7 @@
                                 class="form-control" 
                                 placeholder="Search by name, idCard, or phone" 
                                 [(ngModel)]="userSearchQuery">
-                            <button class="btn btn-primary" (click)="searchUser()">Search</button>
+                            <button class="btn btn-primary" (click)="searchUser()">Tìm kiếm</button>
                         </div>
                         <div *ngIf="users.length > 0">
                             <h5>Kết quả tìm kiếm:</h5>

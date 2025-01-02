@@ -25,10 +25,10 @@
 			<a class="nav-link" routerLink="/booklist">Tìm kiếm</a>
 		  </li>
 		  <li class="nav-item" *ngIf="!isLoggedIn">
-			<a class="nav-link" routerLink="/login">Login</a>
+			<a class="nav-link" routerLink="/login">Đăng nhập</a>
 		  </li>
 		  <li class="nav-item" *ngIf="!isLoggedIn">
-			<a class="nav-link" routerLink="/sign-up">Sign Up</a>
+			<a class="nav-link" routerLink="/sign-up">Đăng kí</a>
 		  </li>
 		  
 		  <li class="nav-item dropdown" *ngIf="isLoggedIn">
@@ -128,22 +128,25 @@
 			<a class="nav-link" routerLink="/admin/admin-home">Home</a>
 		  </li>
 		  <li class="nav-item">
-			<a class="nav-link" routerLink="/decodeQr">Decode QR</a>
+			<a class="nav-link" routerLink="/librarian/deCodeQR">Quét mã QR</a>
 		  </li>
 		  <li class="nav-item">
-			<a class="nav-link" routerLink="/admin/user">Users</a>
+			<a class="nav-link" routerLink="/admin/user">Người đọc</a>
 		  </li>
 		  <li class="nav-item">
-			<a class="nav-link" routerLink="/admin/book">Books</a>
+			<a class="nav-link" routerLink="/admin/librarian">Thủ thư</a>
 		  </li>
 		  <li class="nav-item">
-			<a class="nav-link" routerLink="/admin/author">Authors</a>
+			<a class="nav-link" routerLink="/admin/book">Sách </a>
 		  </li>
 		  <li class="nav-item">
-			<a class="nav-link" routerLink="/admin/genre">Genres</a>
+			<a class="nav-link" routerLink="/admin/author">Tác giả</a>
 		  </li>
 		  <li class="nav-item">
-			<a class="nav-link" (click)="logout()">Logout</a>
+			<a class="nav-link" routerLink="/admin/genre">Thể loại</a>
+		  </li>
+		  <li class="nav-item">
+			<a class="nav-link" (click)="logout()">Đăng xuất</a>
 		  </li>
 		</ul>
 	  </div>
@@ -165,16 +168,16 @@
 		<div class="collapse navbar-collapse" id="adminNavbar">
 		  <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
 			<li class="nav-item">
-			  <a class="nav-link" routerLink="/librarian/book">Book</a>
+			  <a class="nav-link" routerLink="/librarian/book">Sách</a>
 			</li>
 			<li class="nav-item">
 				<a class="nav-link" routerLink="/librarian/borrow">Trả sách</a>
 			  </li>
 			<li class="nav-item">
-			  <a class="nav-link" routerLink="/librarian/deCodeQR">decodeQR</a>
+			  <a class="nav-link" routerLink="/librarian/deCodeQR">Quét mà QR</a>
 			</li>
 			<li class="nav-item">
-			  <a class="nav-link" (click)="logout()">Logout</a>
+			  <a class="nav-link" (click)="logout()">Đăng xuất</a>
 			</li>
 		  </ul>
 		</div>

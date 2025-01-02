@@ -8,14 +8,14 @@
   <table class="table table-bordered table-hover">
     <thead class="table-light">
       <tr>
-        <th>Name</th>
-        <th>Author</th>
-        <th>Genre</th>
-        <th>Number Page</th>
-        <th>Publish Year</th>
-        <th>Details</th>
-        <th>Quantity</th>
-        <th>Action</th>
+        <th>Tên sách</th>
+        <th>Tác giả</th>
+        <th>Thể loại</th>
+        <th>Số trang</th>
+        <th>Năm phát hành</th>
+        <th>Chi tiết </th>
+        <th>Số lượng</th>
+        <th>Hành động</th>
       </tr>
     </thead>
     <tbody>
@@ -42,7 +42,7 @@
       </tr>
     </tbody>
   </table>
-  <button class="btn btn-success mb-4" (click)="openAddBookForm()">Add Book</button>
+  <button class="btn btn-success mb-4" (click)="openAddBookForm()">Thêm sách</button>
 
 </div>
 
@@ -98,21 +98,21 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">Book Details</h5>
+          <h5 class="modal-title">Thông tin chi tiết sách</h5>
           <button class="btn-close" (click)="closeForm()"></button>
         </div>
         <div class="modal-body">
-          <p><strong>Name:</strong> {{ selectedBook.name }}</p>
-          <p><strong>Author:</strong> {{ selectedBook.author.fullname }}</p>
-          <p><strong>Genre:</strong> {{ selectedBook.genres.name }}</p>
-          <p><strong>Number Page:</strong> {{ selectedBook.numberPage }}</p>
-          <p><strong>Publish Year:</strong> {{ selectedBook.publishYear }}</p>
-          <p><strong>Details:</strong> {{ selectedBook.description }}</p>
-          <p><strong>Quantity:</strong> {{ selectedBook.quantity }}</p>
+          <p><strong>Tên sách:</strong> {{ selectedBook.name }}</p>
+          <p><strong>Tác giả:</strong> {{ selectedBook.author.fullname }}</p>
+          <p><strong>Thể loại:</strong> {{ selectedBook.genres.name }}</p>
+          <p><strong>Số trang:</strong> {{ selectedBook.numberPage }}</p>
+          <p><strong>Năm phát hành:</strong> {{ selectedBook.publishYear }}</p>
+          <p><strong>Mô tả:</strong> {{ selectedBook.description }}</p>
+          <p><strong>Số lượng:</strong> {{ selectedBook.quantity }}</p>
         </div>
         <div class="modal-footer">
-          <button class="btn btn-primary" (click)="borrow(selectedBook)">Borrow</button>
-          <button class="btn btn-secondary" (click)="closeForm()">Close</button>
+          <button class="btn btn-primary" (click)="borrow(selectedBook)">Mượn sách</button>
+          <button class="btn btn-secondary" (click)="closeForm()">Đóng</button>
         </div>
       </div>
     </div>
@@ -134,7 +134,7 @@
               class="form-control" 
               placeholder="Search by name, idCard, or phone" 
               [(ngModel)]="userSearchQuery">
-            <button class="btn btn-primary" (click)="searchUser()">Search</button>
+            <button class="btn btn-primary" (click)="searchUser()">Tìm kiếm</button>
           </div>
           <div *ngIf="users.length > 0">
             <h5>Kết quả tìm kiếm:</h5>
@@ -167,11 +167,11 @@
         <div class="modal-body">
           <form (ngSubmit)="saveNewBook()">
             <div class="mb-3">
-              <label class="form-label">Name:</label>
+              <label class="form-label">Tên sách:</label>
               <input type="text" class="form-control" [(ngModel)]="newBook.name" name="name" required />
             </div>                
                 <div class="mb-3">
-                  <label class="form-label">Author:</label>
+                  <label class="form-label">Tác giả:</label>
                   <select class="form-select" [(ngModel)]="newBook.author.id" name="author" required>
                     <option *ngFor="let author of authors" [value]="author.id">
                       {{ author.fullname }}
@@ -180,7 +180,7 @@
                 </div>
                 
                 <div class="mb-3">
-                  <label class="form-label">Genre:</label>
+                  <label class="form-label">Thể loại:</label>
                   <select class="form-select" [(ngModel)]="newBook.genres.id" name="genre" required>
                     <option *ngFor="let genre of genres" [value]="genre.id">
                       {{ genre.name }}
@@ -189,23 +189,23 @@
                 </div>
                 
             <div class="mb-3">
-              <label class="form-label">Pages:</label>
+              <label class="form-label">Số trang:</label>
               <input type="number" class="form-control" [(ngModel)]="newBook.numberPage" name="pages" required />
             </div>
             <div class="mb-3">
-              <label class="form-label">Year:</label>
+              <label class="form-label">Năm phát hành:</label>
               <input type="number" class="form-control" [(ngModel)]="newBook.publishYear" name="year" required />
             </div>
             <div class="mb-3">
-              <label class="form-label">Details:</label>
+              <label class="form-label">Mô tả:</label>
               <textarea class="form-control" [(ngModel)]="newBook.description" name="details" required></textarea>
             </div>
             <div class="mb-3">
-              <label class="form-label">Quantity:</label>
+              <label class="form-label">Số lượng:</label>
               <input type="number" class="form-control" [(ngModel)]="newBook.quantity" name="quantity" required />
             </div>
-            <button type="submit" class="btn btn-success">Save</button>
-            <button type="button" class="btn btn-secondary" (click)="closeAddBookForm()">Cancel</button>
+            <button type="submit" class="btn btn-success">Xác nhận</button>
+            <button type="button" class="btn btn-secondary" (click)="closeAddBookForm()">Hủy</button>
           </form>
         </div>
       </div>

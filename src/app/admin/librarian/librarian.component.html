@@ -13,10 +13,10 @@
           <thead class="table-light">
             <tr>
               <th>ID</th>
-              <th>Username</th>
-              <th>Fullname</th>
+              <th>Tên người dùng</th>
+              <th>Họ tên</th>
               <th>Số điện thoại</th>
-              <th>Action</th>
+              <th>Hành động</th>
             </tr>
           </thead>
           <tbody>
@@ -64,7 +64,7 @@
           <form (ngSubmit)="saveUser()">
             <div class="modal-body">
               <div class="mb-3">
-                <label for="fullname" class="form-label">Fullname:</label>
+                <label for="fullname" class="form-label">Họ tên:</label>
                 <input type="text" id="fullname" class="form-control" [(ngModel)]="selectedUser!.fullname" name="fullname">
               </div>
               <div class="mb-3">

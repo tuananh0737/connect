@@ -16,7 +16,7 @@
             class="w-100 scanner-frame"
           ></zxing-scanner>
           <div class="text-center mt-3">
-            <p class="text-secondary">Position the QR code inside the frame to scan</p>
+            <p class="text-secondary">Bạn hãy định vị mã QR bên trong khung để quét.</p>
           </div>
         </div>
       </div>
@@ -28,10 +28,10 @@
             <h5 class="card-title text-success">QR Code Result</h5>
             <p class="card-text">
               <strong>ID:</strong> {{ qrResult?.id }}<br>
-              <strong>Name:</strong> {{ qrResult?.name }}<br>
-              <strong>Publish Year:</strong> {{ qrResult?.publishYear }}
+              <strong>Tên sách:</strong> {{ qrResult?.name }}<br>
+              <strong>Năm phát hành:</strong> {{ qrResult?.publishYear }}
             </p>
-            <button class="btn btn-primary" (click)="restartScanning()">Scan Again</button>
+            <button class="btn btn-primary" (click)="restartScanning()">Quét lại</button>
           </div>
         </div>
       </ng-template>
@@ -40,46 +40,46 @@
       <div class="mt-4" *ngIf="bookDetails$ | async as bookDetails">
         <div class="card shadow-sm">
           <div class="card-header bg-primary text-white text-center">
-            <h4>Book Details</h4>
+            <h4>Chi tiết sách</h4>
           </div>
           <div class="card-body">
             <div class="book-details-grid">
-              <div class="label">Title:</div>
+              <div class="label">Tên sách:</div>
               <div class="value">{{ bookDetails.name }}</div>
           
-              <div class="label">Number of Pages:</div>
+              <div class="label">Số trang:</div>
               <div class="value">{{ bookDetails.numberPage }}</div>
           
-              <div class="label">Publish Year:</div>
+              <div class="label">Năm phát hành:</div>
               <div class="value">{{ bookDetails.publishYear }}</div>
           
-              <div class="label">Description:</div>
+              <div class="label">Mô tả:</div>
               <div class="value">{{ bookDetails.description }}</div>
           
-              <div class="label">Average Rating:</div>
+              <div class="label">Rating:</div>
               <div class="value">{{ bookDetails.averageRating }}</div>
           
-              <div class="label">Quantity Available:</div>
+              <div class="label">Số lượng:</div>
               <div class="value">{{ bookDetails.quantity }}</div>
           
-              <div class="label">Author:</div>
+              <div class="label">Tác giả:</div>
               <div class="value">
                 {{ bookDetails.author.fullname }} 
               </div>
           
-              <div class="label">Genre:</div>
+              <div class="label">Thể loại:</div>
               <div class="value">
                 {{ bookDetails.genres.name }} - {{ bookDetails.genres.details }}
               </div>
           
-              <div class="label">Location:</div>
+              <div class="label">Vị trí:</div>
               <div class="value">
                 {{ bookDetails.location.room }}, {{ bookDetails.location.shelf }}
               </div>
             </div>
           </div>     
           <div class="text-center mt-4">
-            <button class="btn btn-success" (click)="navigateToBooks()">Go to Book</button>
+            <button class="btn btn-success" (click)="navigateToBooks()">Chi tiết thông tin sách</button>
             </div>     
         </div>
       </div>

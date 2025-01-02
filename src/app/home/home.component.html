@@ -15,13 +15,13 @@
         <div class="card-body">
           <h5 class="card-title">{{ book.name }}</h5>
           <p class="card-text text-muted">
-            Author: {{ book.author.fullname || 'Unknown' }}
+            Tác giảgiả: {{ book.author.fullname || 'Unknown' }}
           </p>
           <p class="card-text text-muted">
-            Genre: {{ book.genres.name || 'Unknown' }}
+            Thể loạiloại: {{ book.genres.name || 'Unknown' }}
           </p>
           <p class="card-text">
-            Published: {{ book.publishYear || 'N/A' }}
+            Năm phát hànhhành: {{ book.publishYear || 'N/A' }}
           </p>
           <p class="card-text">
             Rating: <strong>{{ book.averageRating || 'N/A' }}</strong>

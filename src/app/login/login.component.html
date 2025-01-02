@@ -1,25 +1,25 @@
 <div class="login-container">
   <div class="login-box">
-    <h2>Welcome!</h2>
-    <p>Don't have an account? <a routerLink="/sign-up">Sign up</a></p>
+    <h2>Đăng nhập </h2>
+    <p>Bạn không có tài khoản ? <a routerLink="/sign-up">Đăng kí</a></p>
 
     <form (ngSubmit)="onLogin()">
       <div class="form-group">
-        <label for="username">Email</label>
+        <label for="username">Tài khoản </label>
         <input type="email" id="username" [(ngModel)]="username" name="username" placeholder="Enter your email" required />
       </div>
 
       <div class="form-group">
-        <label for="password">Password</label>
+        <label for="password">Mật khẩu</label>
         <input type="password" id="password" [(ngModel)]="password" name="password" placeholder="Enter your password" required />
       </div>
 
 
-      <a href="#" class="forgot-password">Forgot password?</a>
+      <a href="#" class="forgot-password">Quên mật khẩu</a>
 
       <button type="submit" class="login-btn" [disabled]="loading">
         <span *ngIf="loading">Logging in...</span>
-        <span *ngIf="!loading">Login</span>
+        <span *ngIf="!loading">Đăng nhập</span>
       </button>
 
       <div *ngIf="errorMessage" class="error-message">
